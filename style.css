@@ -92,11 +92,12 @@ body {
   left: 0;
   right: 0;
   z-index: 100;
-  padding: var(--space-4) var(--space-5);
-  background: transparent; /* Hilangkan gradient overlay */
+  padding: clamp(0.75rem, 4vw, 1rem) clamp(1rem, 5vw, 1.5rem);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, transparent 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  backdrop-filter: blur(8px);
 }
 
 .app-title {
@@ -172,6 +173,17 @@ body {
   width: 100% !important;
   height: 100% !important;
   z-index: 1 !important;
+  background: transparent !important; /* Pastikan transparan */
+}
+
+/* Hapus background A-Frame canvas */
+#ar-scene canvas {
+  background: transparent !important;
+}
+
+/* Hapus background A-Frame scene element */
+a-scene {
+  background: transparent !important;
 }
 
 .a-loader-title,
@@ -187,22 +199,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.7); /* Lebih gelap tapi tidak full black */
-  backdrop-filter: blur(8px);
+  background: rgba(15, 23, 42, 0.85); /* Slate transparan, bukan full black */
+  backdrop-filter: blur(12px);
   transition: opacity var(--transition-base);
   padding: var(--space-4); /* Tambah padding agar tidak terlalu mepet */
 }
 
 .hint-content {
-  background: var(--bg-panel);
-  backdrop-filter: blur(30px);
-  border-radius: var(--radius-lg); /* Lebih kecil dari xl */
-  padding: var(--space-4) var(--space-5); /* Kurangi padding untuk mobile */
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, rgba(51, 65, 85, 0.95), rgba(30, 41, 59, 0.98));
+  backdrop-filter: blur(40px);
+  border-radius: var(--radius-xl);
+  padding: clamp(1rem, 5vw, 1.5rem) clamp(1.25rem, 6vw, 2rem); /* Fluid padding */
+  border: 1px solid rgba(255, 255, 255, 0.15);
   text-align: center;
-  max-width: min(85%, 360px); /* Lebih kecil untuk mobile */
+  max-width: min(88%, 380px); /* Lebih pas untuk mobile */
   width: 100%;
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .scan-icon {
@@ -261,15 +273,15 @@ body {
   left: 0;
   right: 0;
   z-index: 50;
-  background: var(--bg-panel);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.99) 100%);
   backdrop-filter: blur(40px);
   border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
-  max-height: 85vh;
+  max-height: 75vh; /* Lebih rendah untuk mobile */
   overflow: hidden;
   transform: translateY(0);
   transition: transform var(--transition-slow);
-  box-shadow: 0 -10px 60px rgba(0, 0, 0, 0.6);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -10px 60px rgba(0, 0, 0, 0.7), 0 -2px 20px rgba(99, 102, 241, 0.1);
+  border-top: 1px solid rgba(99, 102, 241, 0.2);
 }
 
 .nutrition-panel.hidden {
@@ -277,25 +289,25 @@ body {
   pointer-events: none;
 }
 
-/* Swipe handle */
+/* Swipe handle - lebih visible */
 .nutrition-panel::before {
   content: "";
   position: absolute;
-  top: var(--space-2);
+  top: var(--space-3);
   left: 50%;
   transform: translateX(-50%);
-  width: 36px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
+  width: 48px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
   z-index: 1;
 }
 
 .panel-content {
-  padding: var(--space-5);
-  padding-top: var(--space-6);
+  padding: clamp(1rem, 4vw, 1.5rem);
+  padding-top: clamp(1.5rem, 6vw, 2rem);
   overflow-y: auto;
-  max-height: calc(85vh - 100px);
+  max-height: calc(75vh - 80px); /* Sesuaikan dengan max-height panel */
 }
 
 /* Custom scrollbar */
@@ -830,11 +842,15 @@ body {
 
 @media (max-width: 360px) {
   .app-title {
-    font-size: 1.125rem;
+    font-size: 1rem;
+  }
+  
+  #app-header {
+    padding: 0.75rem 1rem;
   }
   
   #calories-value {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
   
   .nutrition-grid {
@@ -842,29 +858,39 @@ body {
   }
   
   .nutrition-item {
-    padding: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  .nutrition-panel {
+    max-height: 70vh; /* Lebih rendah di small screen */
+  }
+  
+  .panel-content {
+    padding: 0.875rem;
+    padding-top: 1.25rem;
   }
   
   /* Camera permission modal lebih kompak di small devices */
   .hint-content {
-    padding: var(--space-3) var(--space-4);
-    max-width: 90%;
+    padding: 0.875rem 1rem;
+    max-width: 92%;
     border-radius: var(--radius-md);
   }
   
   .scan-icon {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: var(--space-2);
   }
   
   .scan-title {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     margin-bottom: var(--space-1);
   }
   
   .scan-subtitle {
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     margin-bottom: var(--space-3);
+    line-height: 1.4;
   }
   
   .scan-status {
@@ -873,7 +899,7 @@ body {
   }
   
   #scan-status-text {
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
   }
 }
 
