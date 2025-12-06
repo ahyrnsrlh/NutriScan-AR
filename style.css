@@ -89,7 +89,7 @@ body {
   transform: translate(-50%, -50%);
   z-index: 10;
   text-align: center;
-  pointer-events: none;
+  pointer-events: all;
 }
 
 .hint-content {
@@ -112,6 +112,39 @@ body {
   margin-bottom: 20px;
 }
 
+.scan-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  pointer-events: all;
+}
+
+.scan-food-btn {
+  background: rgba(76, 175, 80, 0.9);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  pointer-events: all;
+}
+
+.scan-food-btn:hover {
+  background: rgba(76, 175, 80, 1);
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.scan-food-btn:active {
+  transform: scale(0.95);
+}
+
 .scanning-animation {
   width: 60px;
   height: 60px;
@@ -120,6 +153,7 @@ body {
   border-top-color: #4caf50;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  display: none;
 }
 
 @keyframes pulse {
@@ -186,6 +220,12 @@ body {
   color: #666;
 }
 
+.panel-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .bookmark-btn {
   background: rgba(76, 175, 80, 0.15);
   border: 2px solid rgba(76, 175, 80, 0.3);
@@ -194,7 +234,23 @@ body {
   font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-left: 10px;
+}
+
+.close-panel-btn {
+  background: rgba(244, 67, 54, 0.15);
+  border: 2px solid rgba(244, 67, 54, 0.3);
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #F44336;
+  font-weight: bold;
+}
+
+.close-panel-btn:hover {
+  background: rgba(244, 67, 54, 0.25);
+  transform: scale(1.1);
 }
 
 .bookmark-btn:hover {

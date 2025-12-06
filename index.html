@@ -10,7 +10,6 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <title>AR Info Gizi Makanan Cepat Saji</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image.prod.js"></script>
   </head>
   <body>
     <div id="app-container">
@@ -28,8 +27,13 @@
         <div id="scanning-hint" class="hint-overlay">
           <div class="hint-content">
             <div class="scan-icon">📷</div>
-            <p>Point camera at food marker</p>
-            <div class="scanning-animation"></div>
+            <p>Camera Ready - Tap button to scan</p>
+            <div class="scan-buttons">
+              <button class="scan-food-btn" data-food="burger">🍔 Burger</button>
+              <button class="scan-food-btn" data-food="fries">🍟 Fries</button>
+              <button class="scan-food-btn" data-food="soda">🥤 Soda</button>
+            </div>
+            <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px;">Demo Mode: Tap any food to see nutrition info</p>
           </div>
         </div>
       </div>
@@ -41,9 +45,14 @@
             <h2 id="food-name">Loading...</h2>
             <span id="food-serving" class="serving-size">-</span>
           </div>
-          <button id="bookmark-btn" class="bookmark-btn">
-            <span class="bookmark-icon">🔖</span>
-          </button>
+          <div class="panel-actions">
+            <button id="bookmark-btn" class="bookmark-btn">
+              <span class="bookmark-icon">🔖</span>
+            </button>
+            <button id="close-panel-btn" class="close-panel-btn">
+              ✕
+            </button>
+          </div>
         </div>
 
         <div class="panel-content">

@@ -141,16 +141,11 @@ async function loadNutritionData() {
   }
 }
 
-// Initialize MindAR
+// Initialize AR Camera (without MindAR dependency)
 async function initMindAR() {
   const container = document.getElementById("ar-container");
 
   try {
-    // Check if MINDAR is loaded
-    if (!window.MINDAR || !window.MINDAR.IMAGE) {
-      throw new Error('MindAR library not loaded. Please check internet connection and reload.');
-    }
-
     // Create video element
     videoElement = document.createElement('video');
     videoElement.setAttribute('playsinline', '');
@@ -180,51 +175,29 @@ async function initMindAR() {
     console.log('Camera started successfully');
 
     // Start simple detection simulation (for demo)
-    // In production, you would use MindAR's actual image tracking
     startSimpleDetection();
 
   } catch (error) {
-    console.error("MindAR initialization failed:", error);
+    console.error("Camera initialization failed:", error);
     throw new Error(
-      "Failed to start AR camera: " + error.message
+      "Failed to start camera: " + error.message
     );
   }
 }
 
-// Simple detection simulation for demo
+// Setup scan buttons (manual trigger for demo)
 function startSimpleDetection() {
-  const targets = ["burger", "fries", "soda"];
-  let currentTarget = null;
-  let frameCount = 0;
+  const scanButtons = document.querySelectorAll('.scan-food-btn');
+  
+  scanButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const foodId = this.getAttribute('data-food');
+      console.log('Manual scan triggered:', foodId);
+      showNutritionPanel(foodId);
+    });
+  });
 
-  function detectFrame() {
-    frameCount++;
-    
-    // Simulate detection every 60 frames (random)
-    if (frameCount % 60 === 0) {
-      const shouldDetect = Math.random() > 0.5;
-      
-      if (shouldDetect && !currentTarget) {
-        // Show random food
-        const randomIndex = Math.floor(Math.random() * targets.length);
-        currentTarget = targets[randomIndex];
-        console.log('Target detected:', currentTarget);
-        showNutritionPanel(currentTarget);
-      } else if (!shouldDetect && currentTarget) {
-        // Hide panel
-        console.log('Target lost:', currentTarget);
-        currentTarget = null;
-        hideNutritionPanel();
-      }
-    }
-
-    if (isTracking) {
-      requestAnimationFrame(detectFrame);
-    }
-  }
-
-  isTracking = true;
-  detectFrame();
+  console.log('Scan buttons ready');
 }
 
 // Show nutrition panel
@@ -321,6 +294,12 @@ function setupEventListeners() {
 
   // Bookmark button
   bookmarkBtn.addEventListener("click", toggleBookmark);
+
+  // Close panel button
+  const closePanelBtn = document.getElementById("close-panel-btn");
+  if (closePanelBtn) {
+    closePanelBtn.addEventListener("click", hideNutritionPanel);
+  }
 
   // Bookmark list button
   bookmarkListBtn.addEventListener("click", () => {
