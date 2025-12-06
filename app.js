@@ -70,10 +70,19 @@ async function init() {
  * Setup AR-specific event listeners
  */
 function setupAREventListeners() {
+  console.log("🎧 Setting up AR event listeners...");
+  
   // Listen untuk deteksi marker
   document.addEventListener("ar-food-detected", (event) => {
+    console.log(`📊 AR Event Received: ar-food-detected`, event.detail);
     const { foodType } = event.detail;
-    console.log(`📊 AR Event: Food detected - ${foodType}`);
+    console.log(`📊 Processing food detection for: ${foodType}`);
+    
+    if (!foodType) {
+      console.error("❌ foodType is undefined!");
+      return;
+    }
+    
     showNutritionPanel(foodType);
   });
 
@@ -83,6 +92,8 @@ function setupAREventListeners() {
     // Tidak langsung hide panel, biarkan user tetap bisa lihat
     // Panel akan auto-hide jika marker tidak terdeteksi > 3 detik
   });
+  
+  console.log("✅ AR event listeners setup complete");
 }
 
 // Show error message
@@ -156,8 +167,13 @@ async function loadNutritionData() {
 
 // Show nutrition panel
 function showNutritionPanel(foodId) {
+  console.log(`🍔 showNutritionPanel called with foodId: ${foodId}`);
+  console.log(`📊 Available nutrition data:`, Object.keys(nutritionData));
+  
   if (!nutritionData[foodId]) {
-    console.warn(`No nutrition data for: ${foodId}`);
+    console.warn(`❌ No nutrition data for: ${foodId}`);
+    console.warn(`Available foods:`, Object.keys(nutritionData));
+    showToast(`Data untuk ${foodId} tidak ditemukan`, "error");
     return;
   }
 
@@ -165,8 +181,12 @@ function showNutritionPanel(foodId) {
   baseNutrition = nutritionData[foodId];
   currentPortion = 1.0;
 
+  console.log(`✅ Setting current food:`, baseNutrition);
+
   // Hide scanning hint
-  scanningHint.style.display = "none";
+  if (scanningHint) {
+    scanningHint.style.display = "none";
+  }
 
   // Update UI
   updateNutritionDisplay();
@@ -175,7 +195,12 @@ function showNutritionPanel(foodId) {
   updateBookmarkButton();
 
   // Show panel with animation
-  nutritionPanel.classList.remove("hidden");
+  if (nutritionPanel) {
+    nutritionPanel.classList.remove("hidden");
+    console.log(`✅ Nutrition panel shown`);
+  } else {
+    console.error(`❌ nutritionPanel element not found!`);
+  }
 }
 
 // Hide nutrition panel
@@ -240,6 +265,15 @@ function updateWarnings(calories, sodium, sugar) {
 
 // Setup event listeners
 function setupEventListeners() {
+  // DEBUG: Test button untuk simulasi marker detection
+  const testBtn = document.getElementById("test-btn");
+  if (testBtn) {
+    testBtn.addEventListener("click", () => {
+      console.log("🧪 TEST BUTTON CLICKED - Simulating burger detection");
+      showNutritionPanel("burger");
+    });
+  }
+  
   // Portion slider
   portionSlider.addEventListener("input", (e) => {
     currentPortion = parseFloat(e.target.value);

@@ -76,20 +76,25 @@ class ARHandler {
       "marker-pizza",
     ];
 
+    console.log(`🔍 Setting up ${markerIds.length} markers...`);
+
     markerIds.forEach((markerId) => {
       const marker = document.getElementById(markerId);
       if (!marker) {
-        console.warn(`⚠️ Marker ${markerId} tidak ditemukan`);
+        console.warn(`⚠️ Marker ${markerId} tidak ditemukan di DOM`);
         return;
       }
 
       // Extract food type dari marker ID
       const foodType = markerId.replace("marker-", "");
       this.markers[foodType] = marker;
+      console.log(`✅ Marker registered: ${foodType} (${markerId})`);
 
       // Event: Marker ditemukan
       marker.addEventListener("markerFound", () => {
+        console.log(`🎯 ========== MARKER FOUND EVENT ==========`);
         console.log(`✨ Marker ditemukan: ${foodType}`);
+        console.log(`========================================`);
         this.onMarkerFound(foodType);
       });
 
@@ -100,7 +105,7 @@ class ARHandler {
       });
     });
 
-    console.log(`📍 ${Object.keys(this.markers).length} marker telah disetup`);
+    console.log(`📍 ${Object.keys(this.markers).length} marker telah disetup:`, Object.keys(this.markers));
   }
 
   /**
@@ -135,6 +140,7 @@ class ARHandler {
    * Handler ketika marker ditemukan
    */
   onMarkerFound(foodType) {
+    console.log(`🎯 MARKER FOUND: ${foodType}`);
     this.detectedMarkers.add(foodType);
 
     // Clear timeout sebelumnya
@@ -151,9 +157,10 @@ class ARHandler {
     // Tampilkan nutrition panel setelah delay kecil (untuk stabilitas)
     this.detectionTimeout = setTimeout(() => {
       if (this.detectedMarkers.has(foodType)) {
+        console.log(`📊 Showing nutrition for: ${foodType}`);
         this.showNutritionForFood(foodType);
       }
-    }, 500);
+    }, 300); // Kurangi delay dari 500ms ke 300ms
 
     // Trigger haptic feedback jika tersedia
     if (navigator.vibrate) {
@@ -202,7 +209,10 @@ class ARHandler {
     // Dispatch event ke app.js
     const event = new CustomEvent("ar-food-detected", {
       detail: { foodType: foodType },
+      bubbles: true,
+      cancelable: true
     });
+    console.log(`🚀 Dispatching event ar-food-detected for ${foodType}`);
     document.dispatchEvent(event);
   }
 
