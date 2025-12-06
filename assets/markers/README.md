@@ -7,6 +7,7 @@ Since custom MindAR marker training requires the MindAR Compiler, this project u
 ### How to Use Markers:
 
 1. **Download the official MindAR test image:**
+
    - Visit: https://github.com/hiukim/mind-ar-js/tree/master/examples/image-tracking/assets/card-example
    - Download: `card.png`
    - Or use any printed card/image with sufficient features

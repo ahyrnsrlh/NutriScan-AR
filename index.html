@@ -1,126 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <title>AR Info Gizi Makanan Cepat Saji</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image.prod.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-three.prod.js"></script>
-</head>
-<body>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"></script>
+  </head>
+  <body>
     <div id="app-container">
-        <!-- Header -->
-        <header id="app-header">
-            <h1>🍔 AR Nutrition Scanner</h1>
-            <button id="bookmark-list-btn" class="header-btn">
-                <span class="icon">📚</span>
-                <span class="btn-text">Bookmarks</span>
-            </button>
-        </header>
+      <!-- Header -->
+      <header id="app-header">
+        <h1>🍔 AR Nutrition Scanner</h1>
+        <button id="bookmark-list-btn" class="header-btn">
+          <span class="icon">📚</span>
+          <span class="btn-text">Bookmarks</span>
+        </button>
+      </header>
 
-        <!-- AR Container -->
-        <div id="ar-container">
-            <div id="scanning-hint" class="hint-overlay">
-                <div class="hint-content">
-                    <div class="scan-icon">📷</div>
-                    <p>Point camera at food marker</p>
-                    <div class="scanning-animation"></div>
-                </div>
-            </div>
+      <!-- AR Container -->
+      <div id="ar-container">
+        <div id="scanning-hint" class="hint-overlay">
+          <div class="hint-content">
+            <div class="scan-icon">📷</div>
+            <p>Point camera at food marker</p>
+            <div class="scanning-animation"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nutrition Panel (Hidden by default) -->
+      <div id="nutrition-panel" class="nutrition-panel hidden">
+        <div class="panel-header">
+          <div class="food-name-container">
+            <h2 id="food-name">Loading...</h2>
+            <span id="food-serving" class="serving-size">-</span>
+          </div>
+          <button id="bookmark-btn" class="bookmark-btn">
+            <span class="bookmark-icon">🔖</span>
+          </button>
         </div>
 
-        <!-- Nutrition Panel (Hidden by default) -->
-        <div id="nutrition-panel" class="nutrition-panel hidden">
-            <div class="panel-header">
-                <div class="food-name-container">
-                    <h2 id="food-name">Loading...</h2>
-                    <span id="food-serving" class="serving-size">-</span>
-                </div>
-                <button id="bookmark-btn" class="bookmark-btn">
-                    <span class="bookmark-icon">🔖</span>
-                </button>
+        <div class="panel-content">
+          <!-- Main Calorie Display -->
+          <div class="calorie-main">
+            <div class="calorie-value">
+              <span id="calories-value">0</span>
+              <span class="unit">kcal</span>
             </div>
+            <div id="warning-badges" class="warning-badges"></div>
+          </div>
 
-            <div class="panel-content">
-                <!-- Main Calorie Display -->
-                <div class="calorie-main">
-                    <div class="calorie-value">
-                        <span id="calories-value">0</span>
-                        <span class="unit">kcal</span>
-                    </div>
-                    <div id="warning-badges" class="warning-badges"></div>
-                </div>
-
-                <!-- Portion Control -->
-                <div class="portion-control">
-                    <label for="portion-slider">Portion Size</label>
-                    <div class="slider-container">
-                        <span class="slider-label">0.5x</span>
-                        <input type="range" id="portion-slider" min="0.5" max="2" step="0.1" value="1">
-                        <span class="slider-label">2x</span>
-                    </div>
-                    <div class="portion-display">
-                        <span id="portion-value">1.0x</span>
-                    </div>
-                </div>
-
-                <!-- Nutrition Details Grid -->
-                <div class="nutrition-grid">
-                    <div class="nutrition-item">
-                        <div class="nutrition-icon">🥩</div>
-                        <div class="nutrition-info">
-                            <span class="nutrition-label">Protein</span>
-                            <span class="nutrition-value" id="protein-value">0 g</span>
-                        </div>
-                    </div>
-                    <div class="nutrition-item">
-                        <div class="nutrition-icon">🍞</div>
-                        <div class="nutrition-info">
-                            <span class="nutrition-label">Carbs</span>
-                            <span class="nutrition-value" id="carbs-value">0 g</span>
-                        </div>
-                    </div>
-                    <div class="nutrition-item">
-                        <div class="nutrition-icon">🧈</div>
-                        <div class="nutrition-info">
-                            <span class="nutrition-label">Fat</span>
-                            <span class="nutrition-value" id="fat-value">0 g</span>
-                        </div>
-                    </div>
-                    <div class="nutrition-item">
-                        <div class="nutrition-icon">🍬</div>
-                        <div class="nutrition-info">
-                            <span class="nutrition-label">Sugar</span>
-                            <span class="nutrition-value" id="sugar-value">0 g</span>
-                        </div>
-                    </div>
-                    <div class="nutrition-item">
-                        <div class="nutrition-icon">🧂</div>
-                        <div class="nutrition-info">
-                            <span class="nutrition-label">Sodium</span>
-                            <span class="nutrition-value" id="sodium-value">0 mg</span>
-                        </div>
-                    </div>
-                </div>
+          <!-- Portion Control -->
+          <div class="portion-control">
+            <label for="portion-slider">Portion Size</label>
+            <div class="slider-container">
+              <span class="slider-label">0.5x</span>
+              <input
+                type="range"
+                id="portion-slider"
+                min="0.5"
+                max="2"
+                step="0.1"
+                value="1"
+              />
+              <span class="slider-label">2x</span>
             </div>
+            <div class="portion-display">
+              <span id="portion-value">1.0x</span>
+            </div>
+          </div>
+
+          <!-- Nutrition Details Grid -->
+          <div class="nutrition-grid">
+            <div class="nutrition-item">
+              <div class="nutrition-icon">🥩</div>
+              <div class="nutrition-info">
+                <span class="nutrition-label">Protein</span>
+                <span class="nutrition-value" id="protein-value">0 g</span>
+              </div>
+            </div>
+            <div class="nutrition-item">
+              <div class="nutrition-icon">🍞</div>
+              <div class="nutrition-info">
+                <span class="nutrition-label">Carbs</span>
+                <span class="nutrition-value" id="carbs-value">0 g</span>
+              </div>
+            </div>
+            <div class="nutrition-item">
+              <div class="nutrition-icon">🧈</div>
+              <div class="nutrition-info">
+                <span class="nutrition-label">Fat</span>
+                <span class="nutrition-value" id="fat-value">0 g</span>
+              </div>
+            </div>
+            <div class="nutrition-item">
+              <div class="nutrition-icon">🍬</div>
+              <div class="nutrition-info">
+                <span class="nutrition-label">Sugar</span>
+                <span class="nutrition-value" id="sugar-value">0 g</span>
+              </div>
+            </div>
+            <div class="nutrition-item">
+              <div class="nutrition-icon">🧂</div>
+              <div class="nutrition-info">
+                <span class="nutrition-label">Sodium</span>
+                <span class="nutrition-value" id="sodium-value">0 mg</span>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Bookmarks Modal -->
-        <div id="bookmarks-modal" class="modal hidden">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>📚 Saved Items</h2>
-                    <button id="close-modal-btn" class="close-btn">✕</button>
-                </div>
-                <div id="bookmarks-list" class="bookmarks-list">
-                    <p class="empty-message">No saved items yet</p>
-                </div>
-            </div>
+      <!-- Bookmarks Modal -->
+      <div id="bookmarks-modal" class="modal hidden">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>📚 Saved Items</h2>
+            <button id="close-modal-btn" class="close-btn">✕</button>
+          </div>
+          <div id="bookmarks-list" class="bookmarks-list">
+            <p class="empty-message">No saved items yet</p>
+          </div>
         </div>
+      </div>
     </div>
 
     <script src="app.js"></script>
-</body>
+  </body>
 </html>

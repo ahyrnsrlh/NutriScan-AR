@@ -70,15 +70,16 @@ NutriScan AR is a complete web-based augmented reality application that allows u
    ```bash
    # Using Python 3
    python -m http.server 8000
-   
+
    # Using PHP
    php -S localhost:8000
-   
+
    # Using Node.js http-server
    npx http-server -p 8000
    ```
 
 3. **Open in browser**:
+
    ```
    http://localhost:8000
    ```
@@ -106,27 +107,32 @@ Since you're using Laragon:
 ## 🎨 Features Breakdown
 
 ### A. Marker Detection
+
 - Detects burger, fries, and soda markers
 - Shows corresponding nutrition data
 - Hides panel when marker is lost
 
 ### B. Portion Control
+
 - Range: 0.5x to 2.0x
 - Real-time calculation updates
 - Formula: `displayValue = baseValue × portionMultiplier`
 
 ### C. Automatic Warnings
+
 - 🔥 **High Calories** - When > 600 kcal
 - 🧂 **High Sodium** - When > 800 mg
 - 🍬 **High Sugar** - When > 20 g
 
 ### D. Bookmark System
+
 - Save items to localStorage
 - View saved items in modal
 - Remove bookmarks easily
 - Persistent across sessions
 
 ### E. Mobile-First UI
+
 - Glassmorphism design
 - Large tap targets
 - Smooth animations
@@ -180,36 +186,45 @@ Edit `data/nutrition.json`:
 Edit `app.js` in the `updateWarnings()` function:
 
 ```javascript
-if (calories > 600) { /* Your threshold */ }
-if (sodium > 800) { /* Your threshold */ }
-if (sugar > 20) { /* Your threshold */ }
+if (calories > 600) {
+  /* Your threshold */
+}
+if (sodium > 800) {
+  /* Your threshold */
+}
+if (sugar > 20) {
+  /* Your threshold */
+}
 ```
 
 ## 🌐 Browser Compatibility
 
-| Browser | Version | Support |
-|---------|---------|---------|
-| Chrome (Android) | 89+ | ✅ Full |
-| Safari (iOS) | 14+ | ✅ Full |
-| Firefox Mobile | 90+ | ⚠️ Limited |
-| Samsung Internet | 14+ | ✅ Full |
+| Browser          | Version | Support    |
+| ---------------- | ------- | ---------- |
+| Chrome (Android) | 89+     | ✅ Full    |
+| Safari (iOS)     | 14+     | ✅ Full    |
+| Firefox Mobile   | 90+     | ⚠️ Limited |
+| Samsung Internet | 14+     | ✅ Full    |
 
 **Note:** HTTPS is required for camera access in production.
 
 ## 🐛 Troubleshooting
 
 ### Camera Not Working
+
 - Check browser permissions
 - Ensure HTTPS (or localhost)
 - Try different browser
 
 ### Markers Not Detected
+
 - Ensure good lighting
 - Print markers at least 10cm wide
 - Keep marker flat and steady
 - Avoid reflective surfaces
 
 ### Panel Not Showing
+
 - Check console for errors
 - Verify nutrition.json is loaded
 - Ensure marker ID matches data key
@@ -265,6 +280,7 @@ Built with ❤️ for healthier food choices
 ## 📞 Support
 
 For issues or questions:
+
 - Check browser console for errors
 - Verify camera permissions
 - Ensure proper lighting for markers
