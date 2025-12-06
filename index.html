@@ -9,6 +9,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <title>NutriScan AR - Pemindai Gizi Makanan</title>
+
+    <!-- AR.js and A-Frame -->
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.4.2/dist/aframe-master.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -22,24 +27,128 @@
         </button>
       </header>
 
-      <!-- AR Container -->
-      <div id="ar-container">
-        <div id="scanning-hint" class="hint-overlay">
-          <div class="hint-content">
-            <div class="scan-icon">📷</div>
-            <p>Kamera Siap - Ketuk tombol untuk pindai</p>
-            <div class="scan-buttons">
-              <button class="scan-food-btn" data-food="burger">
-                🍔 Burger
-              </button>
-              <button class="scan-food-btn" data-food="fries">
-                🍟 Kentang
-              </button>
-              <button class="scan-food-btn" data-food="soda">🥤 Minuman</button>
-            </div>
-            <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px">
-              Mode Demo: Ketuk makanan untuk lihat info gizi
-            </p>
+      <!-- AR Scene -->
+      <a-scene
+        id="ar-scene"
+        embedded
+        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+        vr-mode-ui="enabled: false"
+        renderer="logarithmicDepthBuffer: true; precision: medium;"
+        loading-screen="enabled: false"
+      >
+        <!-- Camera -->
+        <a-entity camera></a-entity>
+
+        <!-- Marker: Burger (menggunakan Hiro untuk demo) -->
+        <a-marker
+          id="marker-burger"
+          preset="hiro"
+          raycaster="objects: .clickable"
+          emitevents="true"
+          cursor="fuse: false; rayOrigin: mouse;"
+        >
+          <a-plane
+            class="ar-overlay"
+            position="0 0 0"
+            rotation="-90 0 0"
+            width="1.5"
+            height="1"
+            material="color: #ffffff; opacity: 0; transparent: true"
+            data-food="burger"
+          ></a-plane>
+        </a-marker>
+
+        <!-- Marker: Fries (menggunakan Kanji untuk demo) -->
+        <a-marker
+          id="marker-fries"
+          preset="kanji"
+          raycaster="objects: .clickable"
+          emitevents="true"
+          cursor="fuse: false; rayOrigin: mouse;"
+        >
+          <a-plane
+            class="ar-overlay"
+            position="0 0 0"
+            rotation="-90 0 0"
+            width="1.5"
+            height="1"
+            material="color: #ffffff; opacity: 0; transparent: true"
+            data-food="fries"
+          ></a-plane>
+        </a-marker>
+
+        <!-- Marker: Soda (custom pattern - replace di production) -->
+        <a-marker
+          id="marker-soda"
+          type="pattern"
+          url="assets/markers/pattern-soda.patt"
+          raycaster="objects: .clickable"
+          emitevents="true"
+          cursor="fuse: false; rayOrigin: mouse;"
+        >
+          <a-plane
+            class="ar-overlay"
+            position="0 0 0"
+            rotation="-90 0 0"
+            width="1.5"
+            height="1"
+            material="color: #ffffff; opacity: 0; transparent: true"
+            data-food="soda"
+          ></a-plane>
+        </a-marker>
+
+        <!-- Marker: Chicken (custom pattern - replace di production) -->
+        <a-marker
+          id="marker-chicken"
+          type="pattern"
+          url="assets/markers/pattern-chicken.patt"
+          raycaster="objects: .clickable"
+          emitevents="true"
+          cursor="fuse: false; rayOrigin: mouse;"
+        >
+          <a-plane
+            class="ar-overlay"
+            position="0 0 0"
+            rotation="-90 0 0"
+            width="1.5"
+            height="1"
+            material="color: #ffffff; opacity: 0; transparent: true"
+            data-food="chicken"
+          ></a-plane>
+        </a-marker>
+
+        <!-- Marker: Pizza (custom pattern - replace di production) -->
+        <a-marker
+          id="marker-pizza"
+          type="pattern"
+          url="assets/markers/pattern-pizza.patt"
+          raycaster="objects: .clickable"
+          emitevents="true"
+          cursor="fuse: false; rayOrigin: mouse;"
+        >
+          <a-plane
+            class="ar-overlay"
+            position="0 0 0"
+            rotation="-90 0 0"
+            width="1.5"
+            height="1"
+            material="color: #ffffff; opacity: 0; transparent: true"
+            data-food="pizza"
+          ></a-plane>
+        </a-marker>
+      </a-scene>
+
+      <!-- Scanning Hint -->
+      <div id="scanning-hint" class="hint-overlay">
+        <div class="hint-content">
+          <div class="scan-icon">📷</div>
+          <p class="scan-title">Arahkan Kamera ke Marker</p>
+          <p class="scan-subtitle">
+            Pindai gambar makanan untuk melihat info gizi
+          </p>
+          <div class="scan-status">
+            <div class="status-indicator"></div>
+            <span id="scan-status-text">Mencari marker...</span>
           </div>
         </div>
       </div>
@@ -144,6 +253,8 @@
       </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="ar-handler.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

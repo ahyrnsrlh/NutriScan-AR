@@ -3,8 +3,6 @@ let nutritionData = {};
 let currentFood = null;
 let currentPortion = 1.0;
 let baseNutrition = {};
-let mindarController = null;
-let videoElement = null;
 let isTracking = false;
 
 // DOM Elements
@@ -21,6 +19,8 @@ const bookmarksList = document.getElementById("bookmarks-list");
 // Initialize app
 async function init() {
   try {
+    console.log("🚀 Memulai NutriScan AR Production...");
+
     // Check if running in secure context (HTTPS or localhost)
     if (!window.isSecureContext) {
       showError("AR memerlukan HTTPS. Silakan gunakan koneksi aman.");
@@ -35,43 +35,54 @@ async function init() {
       return;
     }
 
-    // Request camera permission first
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: "environment",
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-        },
-      });
-      // Stop the stream immediately, MindAR will request it again
-      stream.getTracks().forEach((track) => track.stop());
-      console.log("Izin kamera diberikan");
-    } catch (permError) {
-      console.error("Error izin kamera:", permError);
-      showError(
-        "Izin kamera ditolak. Silakan izinkan akses kamera di pengaturan browser dan muat ulang halaman."
-      );
-      return;
-    }
+    // Show loading indicator
+    showToast("Memuat AR Engine...", "info");
 
     // Load nutrition data
     await loadNutritionData();
+    console.log("✅ Data nutrisi dimuat");
 
-    // Initialize MindAR
-    await initMindAR();
+    // Initialize AR Handler
+    const arInitialized = await arHandler.init();
+    if (!arInitialized) {
+      throw new Error("AR Handler gagal diinisialisasi");
+    }
+    console.log("✅ AR Handler siap");
 
     // Setup event listeners
     setupEventListeners();
 
+    // Setup AR event listeners
+    setupAREventListeners();
+
     // Load bookmarks
     loadBookmarks();
 
-    console.log("Aplikasi berhasil diinisialisasi");
+    console.log("✅ Aplikasi berhasil diinisialisasi");
+    showToast("AR siap! Arahkan kamera ke marker makanan", "success");
   } catch (error) {
-    console.error("Error inisialisasi:", error);
+    console.error("❌ Error inisialisasi:", error);
     showError("Gagal menginisialisasi AR: " + error.message);
   }
+}
+
+/**
+ * Setup AR-specific event listeners
+ */
+function setupAREventListeners() {
+  // Listen untuk deteksi marker
+  document.addEventListener("ar-food-detected", (event) => {
+    const { foodType } = event.detail;
+    console.log(`📊 AR Event: Food detected - ${foodType}`);
+    showNutritionPanel(foodType);
+  });
+
+  // Listen untuk marker hilang
+  document.addEventListener("ar-food-lost", () => {
+    console.log("👋 AR Event: Food lost");
+    // Tidak langsung hide panel, biarkan user tetap bisa lihat
+    // Panel akan auto-hide jika marker tidak terdeteksi > 3 detik
+  });
 }
 
 // Show error message
@@ -141,64 +152,7 @@ async function loadNutritionData() {
   }
 }
 
-// Initialize AR Camera (without MindAR dependency)
-async function initMindAR() {
-  const container = document.getElementById("ar-container");
-
-  try {
-    // Create video element
-    videoElement = document.createElement('video');
-    videoElement.setAttribute('playsinline', '');
-    videoElement.setAttribute('autoplay', '');
-    videoElement.setAttribute('muted', '');
-    videoElement.style.position = 'absolute';
-    videoElement.style.top = '0';
-    videoElement.style.left = '0';
-    videoElement.style.width = '100%';
-    videoElement.style.height = '100%';
-    videoElement.style.objectFit = 'cover';
-    videoElement.style.zIndex = '1';
-    container.appendChild(videoElement);
-
-    // Get camera stream
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: 'environment',
-        width: { ideal: 1280 },
-        height: { ideal: 720 }
-      }
-    });
-
-    videoElement.srcObject = stream;
-    await videoElement.play();
-
-    console.log('Kamera berhasil dijalankan');
-
-    // Start simple detection simulation (for demo)
-    startSimpleDetection();
-
-  } catch (error) {
-    console.error("Inisialisasi kamera gagal:", error);
-    throw new Error(
-      "Gagal menjalankan kamera: " + error.message
-    );
-  }
-}
-
-// Setup scan buttons (manual trigger for demo)
-function startSimpleDetection() {
-  const scanButtons = document.querySelectorAll('.scan-food-btn');
-  
-  scanButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const foodId = this.getAttribute('data-food');
-      console.log('Pemindaian manual dipicu:', foodId);
-      showNutritionPanel(foodId);
-    });
-  });
-
-  console.log('Tombol pindai siap');
-}
+// AR.js menghandle kamera otomatis, tidak perlu manual setup lagi
 
 // Show nutrition panel
 function showNutritionPanel(foodId) {
@@ -390,7 +344,8 @@ function renderBookmarks() {
   const bookmarks = getSavedBookmarks();
 
   if (bookmarks.length === 0) {
-    bookmarksList.innerHTML = '<p class="empty-message">Belum ada item tersimpan</p>';
+    bookmarksList.innerHTML =
+      '<p class="empty-message">Belum ada item tersimpan</p>';
     return;
   }
 
