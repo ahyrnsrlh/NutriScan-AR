@@ -3,9 +3,7 @@ let nutritionData = {};
 let currentFood = null;
 let currentPortion = 1.0;
 let baseNutrition = {};
-let mindarController = null;
-let videoElement = null;
-let isTracking = false;
+let mindarThree = null;
 
 // DOM Elements
 const nutritionPanel = document.getElementById("nutrition-panel");
@@ -146,85 +144,52 @@ async function initMindAR() {
   const container = document.getElementById("ar-container");
 
   try {
-    // Check if MINDAR is loaded
-    if (!window.MINDAR || !window.MINDAR.IMAGE) {
-      throw new Error('MindAR library not loaded. Please check internet connection and reload.');
-    }
-
-    // Create video element
-    videoElement = document.createElement('video');
-    videoElement.setAttribute('playsinline', '');
-    videoElement.setAttribute('autoplay', '');
-    videoElement.setAttribute('muted', '');
-    videoElement.style.position = 'absolute';
-    videoElement.style.top = '0';
-    videoElement.style.left = '0';
-    videoElement.style.width = '100%';
-    videoElement.style.height = '100%';
-    videoElement.style.objectFit = 'cover';
-    videoElement.style.zIndex = '1';
-    container.appendChild(videoElement);
-
-    // Get camera stream
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: 'environment',
-        width: { ideal: 1280 },
-        height: { ideal: 720 }
-      }
+    // Create MindAR Controller
+    const mindar = new window.MINDAR.IMAGE.Controller({
+      container: container,
+      imageTargetSrc:
+        "https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.2/examples/image-tracking/assets/card-example/card.mind",
+      maxTrack: 3,
+      filterMinCF: 0.0001,
+      filterBeta: 0.001,
+      uiLoading: "yes",
+      uiScanning: "yes",
+      uiError: "yes",
     });
 
-    videoElement.srcObject = stream;
-    await videoElement.play();
+    // Start AR
+    await mindar.startAR();
+    console.log("MindAR started successfully");
 
-    console.log('Camera started successfully');
+    // Setup target tracking (using 3 targets for demo)
+    const targets = ["burger", "fries", "soda"];
 
-    // Start simple detection simulation (for demo)
-    // In production, you would use MindAR's actual image tracking
-    startSimpleDetection();
+    targets.forEach((targetId, index) => {
+      // Listen for target found
+      mindar.onTargetFound = (targetIndex) => {
+        if (targetIndex === index) {
+          console.log(`Target found: ${targetId}`);
+          showNutritionPanel(targetId);
+        }
+      };
 
+      // Listen for target lost
+      mindar.onTargetLost = (targetIndex) => {
+        if (targetIndex === index) {
+          console.log(`Target lost: ${targetId}`);
+          hideNutritionPanel();
+        }
+      };
+    });
+
+    // Store mindar instance globally
+    window.mindarInstance = mindar;
   } catch (error) {
     console.error("MindAR initialization failed:", error);
     throw new Error(
-      "Failed to start AR camera: " + error.message
+      "Failed to start AR camera. Please ensure camera permissions are granted and try again."
     );
   }
-}
-
-// Simple detection simulation for demo
-function startSimpleDetection() {
-  const targets = ["burger", "fries", "soda"];
-  let currentTarget = null;
-  let frameCount = 0;
-
-  function detectFrame() {
-    frameCount++;
-    
-    // Simulate detection every 60 frames (random)
-    if (frameCount % 60 === 0) {
-      const shouldDetect = Math.random() > 0.5;
-      
-      if (shouldDetect && !currentTarget) {
-        // Show random food
-        const randomIndex = Math.floor(Math.random() * targets.length);
-        currentTarget = targets[randomIndex];
-        console.log('Target detected:', currentTarget);
-        showNutritionPanel(currentTarget);
-      } else if (!shouldDetect && currentTarget) {
-        // Hide panel
-        console.log('Target lost:', currentTarget);
-        currentTarget = null;
-        hideNutritionPanel();
-      }
-    }
-
-    if (isTracking) {
-      requestAnimationFrame(detectFrame);
-    }
-  }
-
-  isTracking = true;
-  detectFrame();
 }
 
 // Show nutrition panel
