@@ -1,6 +1,6 @@
 {
   "burger": {
-    "name": "Classic Burger",
+    "name": "Burger Klasik",
     "serving": "1 burger (200 g)",
     "calories": 520,
     "protein_g": 22,
@@ -10,8 +10,8 @@
     "sodium_mg": 950
   },
   "fries": {
-    "name": "French Fries",
-    "serving": "1 medium (117 g)",
+    "name": "Kentang Goreng",
+    "serving": "1 porsi sedang (117 g)",
     "calories": 365,
     "protein_g": 4,
     "fat_g": 17,
@@ -20,8 +20,8 @@
     "sodium_mg": 246
   },
   "chicken": {
-    "name": "Fried Chicken",
-    "serving": "2 pieces (148 g)",
+    "name": "Ayam Goreng",
+    "serving": "2 potong (148 g)",
     "calories": 430,
     "protein_g": 30,
     "fat_g": 27,
@@ -30,8 +30,8 @@
     "sodium_mg": 1190
   },
   "soda": {
-    "name": "Cola Drink",
-    "serving": "1 cup (355 ml)",
+    "name": "Minuman Soda",
+    "serving": "1 gelas (355 ml)",
     "calories": 140,
     "protein_g": 0,
     "fat_g": 0,
@@ -40,8 +40,8 @@
     "sodium_mg": 45
   },
   "icecream": {
-    "name": "Ice Cream Sundae",
-    "serving": "1 serving (179 g)",
+    "name": "Es Krim Sundae",
+    "serving": "1 porsi (179 g)",
     "calories": 330,
     "protein_g": 6,
     "fat_g": 10,
@@ -50,8 +50,8 @@
     "sodium_mg": 180
   },
   "milktea": {
-    "name": "Milk Tea",
-    "serving": "1 cup (473 ml)",
+    "name": "Teh Susu",
+    "serving": "1 gelas (473 ml)",
     "calories": 380,
     "protein_g": 4,
     "fat_g": 8,
@@ -60,7 +60,7 @@
     "sodium_mg": 120
   },
   "wrap": {
-    "name": "Chicken Wrap",
+    "name": "Wrap Ayam",
     "serving": "1 wrap (241 g)",
     "calories": 450,
     "protein_g": 28,
@@ -70,7 +70,7 @@
     "sodium_mg": 1020
   },
   "hotdog": {
-    "name": "Hot Dog",
+    "name": "Hotdog",
     "serving": "1 hotdog (140 g)",
     "calories": 290,
     "protein_g": 11,
@@ -80,8 +80,8 @@
     "sodium_mg": 810
   },
   "donut": {
-    "name": "Glazed Donut",
-    "serving": "1 donut (60 g)",
+    "name": "Donat Glasir",
+    "serving": "1 donat (60 g)",
     "calories": 260,
     "protein_g": 3,
     "fat_g": 14,
@@ -90,8 +90,8 @@
     "sodium_mg": 320
   },
   "pizza": {
-    "name": "Pizza Slice",
-    "serving": "1 slice (107 g)",
+    "name": "Sepotong Pizza",
+    "serving": "1 potong (107 g)",
     "calories": 285,
     "protein_g": 12,
     "fat_g": 10,

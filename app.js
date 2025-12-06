@@ -23,14 +23,14 @@ async function init() {
   try {
     // Check if running in secure context (HTTPS or localhost)
     if (!window.isSecureContext) {
-      showError("AR requires HTTPS. Please use a secure connection.");
+      showError("AR memerlukan HTTPS. Silakan gunakan koneksi aman.");
       return;
     }
 
     // Check browser support
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       showError(
-        "Your browser does not support camera access. Please use Chrome or Safari."
+        "Browser Anda tidak mendukung akses kamera. Silakan gunakan Chrome atau Safari."
       );
       return;
     }
@@ -46,11 +46,11 @@ async function init() {
       });
       // Stop the stream immediately, MindAR will request it again
       stream.getTracks().forEach((track) => track.stop());
-      console.log("Camera permission granted");
+      console.log("Izin kamera diberikan");
     } catch (permError) {
-      console.error("Camera permission error:", permError);
+      console.error("Error izin kamera:", permError);
       showError(
-        "Camera permission denied. Please allow camera access in your browser settings and reload the page."
+        "Izin kamera ditolak. Silakan izinkan akses kamera di pengaturan browser dan muat ulang halaman."
       );
       return;
     }
@@ -67,10 +67,10 @@ async function init() {
     // Load bookmarks
     loadBookmarks();
 
-    console.log("App initialized successfully");
+    console.log("Aplikasi berhasil diinisialisasi");
   } catch (error) {
-    console.error("Initialization error:", error);
-    showError("Failed to initialize AR: " + error.message);
+    console.error("Error inisialisasi:", error);
+    showError("Gagal menginisialisasi AR: " + error.message);
   }
 }
 
@@ -96,7 +96,7 @@ function showError(message) {
     `;
   errorDiv.innerHTML = `
         <div style="font-size: 3rem; margin-bottom: 15px;">⚠️</div>
-        <div style="font-weight: 600; margin-bottom: 10px;">AR Initialization Failed</div>
+        <div style="font-weight: 600; margin-bottom: 10px;">Inisialisasi AR Gagal</div>
         <div style="font-size: 0.9rem; opacity: 0.95;">${message}</div>
         <button onclick="location.reload()" style="
             margin-top: 20px;
@@ -108,7 +108,7 @@ function showError(message) {
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-        ">Reload Page</button>
+        ">Muat Ulang</button>
     `;
   document.body.appendChild(errorDiv);
 }
@@ -172,15 +172,15 @@ async function initMindAR() {
     videoElement.srcObject = stream;
     await videoElement.play();
 
-    console.log('Camera started successfully');
+    console.log('Kamera berhasil dijalankan');
 
     // Start simple detection simulation (for demo)
     startSimpleDetection();
 
   } catch (error) {
-    console.error("Camera initialization failed:", error);
+    console.error("Inisialisasi kamera gagal:", error);
     throw new Error(
-      "Failed to start camera: " + error.message
+      "Gagal menjalankan kamera: " + error.message
     );
   }
 }
@@ -192,12 +192,12 @@ function startSimpleDetection() {
   scanButtons.forEach(button => {
     button.addEventListener('click', function() {
       const foodId = this.getAttribute('data-food');
-      console.log('Manual scan triggered:', foodId);
+      console.log('Pemindaian manual dipicu:', foodId);
       showNutritionPanel(foodId);
     });
   });
 
-  console.log('Scan buttons ready');
+  console.log('Tombol pindai siap');
 }
 
 // Show nutrition panel
@@ -267,13 +267,13 @@ function updateWarnings(calories, sodium, sugar) {
   const warnings = [];
 
   if (calories > 600) {
-    warnings.push({ type: "high-calories", text: "⚠️ High Calories" });
+    warnings.push({ type: "high-calories", text: "⚠️ Kalori Tinggi" });
   }
   if (sodium > 800) {
-    warnings.push({ type: "high-sodium", text: "🧂 High Sodium" });
+    warnings.push({ type: "high-sodium", text: "🧂 Natrium Tinggi" });
   }
   if (sugar > 20) {
-    warnings.push({ type: "high-sugar", text: "🍬 High Sugar" });
+    warnings.push({ type: "high-sugar", text: "🍬 Gula Tinggi" });
   }
 
   warnings.forEach((warning) => {
@@ -330,7 +330,7 @@ function toggleBookmark() {
   if (index > -1) {
     // Remove bookmark
     bookmarks.splice(index, 1);
-    showToast("Removed from bookmarks");
+    showToast("Dihapus dari tersimpan");
   } else {
     // Add bookmark
     bookmarks.push({
@@ -339,7 +339,7 @@ function toggleBookmark() {
       calories: baseNutrition.calories,
       timestamp: Date.now(),
     });
-    showToast("Added to bookmarks");
+    showToast("Ditambahkan ke tersimpan");
   }
 
   saveBookmarks(bookmarks);
@@ -390,7 +390,7 @@ function renderBookmarks() {
   const bookmarks = getSavedBookmarks();
 
   if (bookmarks.length === 0) {
-    bookmarksList.innerHTML = '<p class="empty-message">No saved items yet</p>';
+    bookmarksList.innerHTML = '<p class="empty-message">Belum ada item tersimpan</p>';
     return;
   }
 
@@ -427,7 +427,7 @@ function removeBookmark(foodId) {
   saveBookmarks(bookmarks);
   renderBookmarks();
   updateBookmarkButton();
-  showToast("Bookmark removed");
+  showToast("Dihapus dari tersimpan");
 }
 
 // Show toast notification

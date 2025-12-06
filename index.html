@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -15,10 +15,10 @@
     <div id="app-container">
       <!-- Header -->
       <header id="app-header">
-        <h1>🍔 AR Nutrition Scanner</h1>
+        <h1>🍔 Pemindai Gizi AR</h1>
         <button id="bookmark-list-btn" class="header-btn">
           <span class="icon">📚</span>
-          <span class="btn-text">Bookmarks</span>
+          <span class="btn-text">Tersimpan</span>
         </button>
       </header>
 
@@ -27,13 +27,19 @@
         <div id="scanning-hint" class="hint-overlay">
           <div class="hint-content">
             <div class="scan-icon">📷</div>
-            <p>Camera Ready - Tap button to scan</p>
+            <p>Kamera Siap - Ketuk tombol untuk pindai</p>
             <div class="scan-buttons">
-              <button class="scan-food-btn" data-food="burger">🍔 Burger</button>
-              <button class="scan-food-btn" data-food="fries">🍟 Fries</button>
-              <button class="scan-food-btn" data-food="soda">🥤 Soda</button>
+              <button class="scan-food-btn" data-food="burger">
+                🍔 Burger
+              </button>
+              <button class="scan-food-btn" data-food="fries">
+                🍟 Kentang
+              </button>
+              <button class="scan-food-btn" data-food="soda">🥤 Minuman</button>
             </div>
-            <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px;">Demo Mode: Tap any food to see nutrition info</p>
+            <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px">
+              Mode Demo: Ketuk makanan untuk lihat info gizi
+            </p>
           </div>
         </div>
       </div>
@@ -42,16 +48,14 @@
       <div id="nutrition-panel" class="nutrition-panel hidden">
         <div class="panel-header">
           <div class="food-name-container">
-            <h2 id="food-name">Loading...</h2>
+            <h2 id="food-name">Memuat...</h2>
             <span id="food-serving" class="serving-size">-</span>
           </div>
           <div class="panel-actions">
             <button id="bookmark-btn" class="bookmark-btn">
               <span class="bookmark-icon">🔖</span>
             </button>
-            <button id="close-panel-btn" class="close-panel-btn">
-              ✕
-            </button>
+            <button id="close-panel-btn" class="close-panel-btn">✕</button>
           </div>
         </div>
 
@@ -67,7 +71,7 @@
 
           <!-- Portion Control -->
           <div class="portion-control">
-            <label for="portion-slider">Portion Size</label>
+            <label for="portion-slider">Ukuran Porsi</label>
             <div class="slider-container">
               <span class="slider-label">0.5x</span>
               <input
@@ -97,28 +101,28 @@
             <div class="nutrition-item">
               <div class="nutrition-icon">🍞</div>
               <div class="nutrition-info">
-                <span class="nutrition-label">Carbs</span>
+                <span class="nutrition-label">Karbohidrat</span>
                 <span class="nutrition-value" id="carbs-value">0 g</span>
               </div>
             </div>
             <div class="nutrition-item">
               <div class="nutrition-icon">🧈</div>
               <div class="nutrition-info">
-                <span class="nutrition-label">Fat</span>
+                <span class="nutrition-label">Lemak</span>
                 <span class="nutrition-value" id="fat-value">0 g</span>
               </div>
             </div>
             <div class="nutrition-item">
               <div class="nutrition-icon">🍬</div>
               <div class="nutrition-info">
-                <span class="nutrition-label">Sugar</span>
+                <span class="nutrition-label">Gula</span>
                 <span class="nutrition-value" id="sugar-value">0 g</span>
               </div>
             </div>
             <div class="nutrition-item">
               <div class="nutrition-icon">🧂</div>
               <div class="nutrition-info">
-                <span class="nutrition-label">Sodium</span>
+                <span class="nutrition-label">Natrium</span>
                 <span class="nutrition-value" id="sodium-value">0 mg</span>
               </div>
             </div>
@@ -130,11 +134,11 @@
       <div id="bookmarks-modal" class="modal hidden">
         <div class="modal-content">
           <div class="modal-header">
-            <h2>📚 Saved Items</h2>
+            <h2>📚 Item Tersimpan</h2>
             <button id="close-modal-btn" class="close-btn">✕</button>
           </div>
           <div id="bookmarks-list" class="bookmarks-list">
-            <p class="empty-message">No saved items yet</p>
+            <p class="empty-message">Belum ada item tersimpan</p>
           </div>
         </div>
       </div>
