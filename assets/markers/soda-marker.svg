@@ -1,0 +1,27 @@
+<!-- Soda Marker Placeholder -->
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="800" fill="#FFF5E1"/>
+  
+  <!-- Soda Cup -->
+  <g transform="translate(400, 400)">
+    <!-- Cup body -->
+    <path d="M -80 -150 L -100 100 L 100 100 L 80 -150 Z" fill="#E74C3C"/>
+    <ellipse cx="0" cy="-150" rx="80" ry="20" fill="#C0392B"/>
+    
+    <!-- Straw -->
+    <rect x="60" y="-200" width="15" height="250" fill="#FFF" rx="7"/>
+    <rect x="60" y="-200" width="15" height="30" fill="#E74C3C" rx="7"/>
+    
+    <!-- Cup stripes -->
+    <rect x="-70" y="-50" width="140" height="15" fill="#FFF" opacity="0.3" rx="3"/>
+    <rect x="-75" y="0" width="150" height="15" fill="#FFF" opacity="0.3" rx="3"/>
+    
+    <!-- Logo area -->
+    <circle cx="0" cy="-70" r="40" fill="#FFF"/>
+    <text x="0" y="-55" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="#E74C3C">C</text>
+  </g>
+  
+  <!-- Text -->
+  <text x="400" y="650" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#333">COLA</text>
+  <text x="400" y="700" font-family="Arial, sans-serif" font-size="32" text-anchor="middle" fill="#666">Scan Me</text>
+</svg>

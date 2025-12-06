@@ -1,0 +1,518 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #000;
+    color: #fff;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+#app-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+#app-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 15px 20px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#app-header h1 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.header-btn {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.header-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+.header-btn .icon {
+    font-size: 1.2rem;
+}
+
+/* AR Container */
+#ar-container {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+/* Scanning Hint Overlay */
+.hint-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+    pointer-events: none;
+}
+
+.hint-content {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px 40px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.scan-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.hint-content p {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.scanning-animation {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: #4CAF50;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Nutrition Panel */
+.nutrition-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 30px 30px 0 0;
+    padding: 20px;
+    max-height: 75vh;
+    overflow-y: auto;
+    transform: translateY(0);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.nutrition-panel.hidden {
+    transform: translateY(100%);
+    pointer-events: none;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.food-name-container {
+    flex: 1;
+}
+
+#food-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 5px;
+}
+
+.serving-size {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.bookmark-btn {
+    background: rgba(76, 175, 80, 0.15);
+    border: 2px solid rgba(76, 175, 80, 0.3);
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.bookmark-btn:hover {
+    background: rgba(76, 175, 80, 0.25);
+    transform: scale(1.1);
+}
+
+.bookmark-btn.bookmarked {
+    background: rgba(76, 175, 80, 0.9);
+    border-color: #4CAF50;
+}
+
+/* Panel Content */
+.panel-content {
+    color: #222;
+}
+
+/* Main Calorie Display */
+.calorie-main {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.calorie-value {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.calorie-value .unit {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+/* Warning Badges */
+.warning-badges {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.warning-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.warning-badge.high-calories {
+    background: rgba(255, 87, 34, 0.9);
+}
+
+.warning-badge.high-sodium {
+    background: rgba(244, 67, 54, 0.9);
+}
+
+.warning-badge.high-sugar {
+    background: rgba(233, 30, 99, 0.9);
+}
+
+/* Portion Control */
+.portion-control {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+}
+
+.portion-control label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.slider-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    min-width: 35px;
+}
+
+#portion-slider {
+    flex: 1;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(to right, #4CAF50, #8BC34A);
+    border-radius: 10px;
+    outline: none;
+}
+
+#portion-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border: 3px solid #4CAF50;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#portion-slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border: 3px solid #4CAF50;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.portion-display {
+    text-align: center;
+    margin-top: 8px;
+}
+
+#portion-value {
+    display: inline-block;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #4CAF50;
+    padding: 5px 20px;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 12px;
+}
+
+/* Nutrition Grid */
+.nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+.nutrition-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 14px;
+    transition: all 0.3s ease;
+}
+
+.nutrition-item:hover {
+    background: rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.nutrition-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.nutrition-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nutrition-label {
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.nutrition-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #222;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    color: #222;
+}
+
+.close-btn {
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.5rem;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+    transform: rotate(90deg);
+}
+
+/* Bookmarks List */
+.bookmarks-list {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.empty-message {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+    padding: 40px 20px;
+}
+
+.bookmark-item {
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bookmark-item-info h3 {
+    font-size: 1.2rem;
+    color: #222;
+    margin-bottom: 5px;
+}
+
+.bookmark-item-info p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.remove-bookmark-btn {
+    background: rgba(244, 67, 54, 0.15);
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    color: #F44336;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.remove-bookmark-btn:hover {
+    background: rgba(244, 67, 54, 0.9);
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    #app-header h1 {
+        font-size: 1.1rem;
+    }
+    
+    .calorie-value {
+        font-size: 3rem;
+    }
+    
+    .nutrition-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* iOS Safari fixes */
+@supports (-webkit-touch-callout: none) {
+    body {
+        height: -webkit-fill-available;
+    }
+}

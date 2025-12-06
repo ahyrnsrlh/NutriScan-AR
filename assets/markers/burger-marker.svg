@@ -1,0 +1,28 @@
+<!-- Burger Marker Placeholder -->
+<!-- For actual use, replace with a high-resolution photo of a burger or burger packaging -->
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="800" fill="#FFF5E1"/>
+  
+  <!-- Burger Icon -->
+  <g transform="translate(400, 400)">
+    <!-- Top bun -->
+    <ellipse cx="0" cy="-100" rx="150" ry="60" fill="#D2691E"/>
+    <ellipse cx="0" cy="-100" rx="140" ry="55" fill="#DEB887"/>
+    
+    <!-- Lettuce -->
+    <rect x="-140" y="-70" width="280" height="20" fill="#90EE90" rx="5"/>
+    
+    <!-- Cheese -->
+    <rect x="-130" y="-45" width="260" height="15" fill="#FFD700" rx="3"/>
+    
+    <!-- Patty -->
+    <rect x="-145" y="-25" width="290" height="35" fill="#8B4513" rx="5"/>
+    
+    <!-- Bottom bun -->
+    <ellipse cx="0" cy="20" rx="150" ry="50" fill="#DEB887"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="400" y="650" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#333">BURGER</text>
+  <text x="400" y="700" font-family="Arial, sans-serif" font-size="32" text-anchor="middle" fill="#666">Scan Me</text>
+</svg>
