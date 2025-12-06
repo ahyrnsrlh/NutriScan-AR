@@ -1,0 +1,778 @@
+/* ========================================
+   NUTRISCAN AR - MODERN MOBILE-FIRST UI
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  /* Color Palette */
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #10b981;
+  --accent: #f59e0b;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  
+  /* Neutrals */
+  --bg-dark: #0f172a;
+  --bg-panel: #1e293b;
+  --bg-card: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border: rgba(255, 255, 255, 0.1);
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+               'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================================
+   HEADER - COMPACT & MODERN
+   ======================================== */
+
+#app-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-md) var(--space-lg);
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.95) 0%,
+    rgba(15, 23, 42, 0) 100%
+  );
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #fff 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  display: inline-block;
+}
+
+.app-title::after {
+  content: "AR";
+  position: absolute;
+  top: -6px;
+  right: -20px;
+  font-size: 0.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+  letter-spacing: 0.05em;
+  -webkit-text-fill-color: #fff;
+}
+
+.header-btn {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.header-btn:active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.98);
+}
+
+.header-btn .icon {
+  font-size: 1.125rem;
+}
+
+.btn-text {
+  display: none;
+}
+
+/* Show text on larger screens */
+@media (min-width: 375px) {
+  .btn-text {
+    display: inline;
+  }
+}
+
+/* AR Scene */
+#ar-scene {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1 !important;
+}
+
+a-scene {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hide A-Frame loading screen */
+.a-loader-title {
+  display: none !important;
+}
+
+.a-enter-vr-button {
+  display: none !important;
+}
+
+.header-btn .icon {
+  font-size: 1.2rem;
+}
+
+/* AR Container */
+#ar-container {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+/* Scanning Hint Overlay */
+.hint-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  transition: opacity 0.3s ease;
+}
+
+.hint-content {
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  max-width: 90%;
+  width: 400px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.scan-icon {
+  font-size: 5rem;
+  margin-bottom: 20px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.scan-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.scan-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.scan-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #4caf50;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+.status-indicator.scanning {
+  background: #ffc107;
+}
+
+.status-indicator.detected {
+  background: #4caf50;
+}
+
+.status-indicator.error {
+  background: #f44336;
+}
+
+.status-indicator.ready {
+  background: #2196f3;
+}
+
+#scan-status-text {
+  font-size: 0.95rem;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Hide scan buttons in production (marker-based detection) */
+.scan-buttons {
+  display: none;
+}
+
+.scan-food-btn {
+  display: none;
+}
+
+.scanning-animation {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #4caf50;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: none;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Nutrition Panel */
+.nutrition-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 30px 30px 0 0;
+  padding: 20px;
+  max-height: 75vh;
+  overflow-y: auto;
+  transform: translateY(0);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.nutrition-panel.hidden {
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.food-name-container {
+  flex: 1;
+}
+
+#food-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.serving-size {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.bookmark-btn {
+  background: rgba(76, 175, 80, 0.15);
+  border: 2px solid rgba(76, 175, 80, 0.3);
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-panel-btn {
+  background: rgba(244, 67, 54, 0.15);
+  border: 2px solid rgba(244, 67, 54, 0.3);
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #f44336;
+  font-weight: bold;
+}
+
+.close-panel-btn:hover {
+  background: rgba(244, 67, 54, 0.25);
+  transform: scale(1.1);
+}
+
+.bookmark-btn:hover {
+  background: rgba(76, 175, 80, 0.25);
+  transform: scale(1.1);
+}
+
+.bookmark-btn.bookmarked {
+  background: rgba(76, 175, 80, 0.9);
+  border-color: #4caf50;
+}
+
+/* Panel Content */
+.panel-content {
+  color: #222;
+}
+
+/* Main Calorie Display */
+.calorie-main {
+  text-align: center;
+  margin-bottom: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.calorie-value {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.calorie-value .unit {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+/* Warning Badges */
+.warning-badges {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.warning-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.warning-badge.high-calories {
+  background: rgba(255, 87, 34, 0.9);
+}
+
+.warning-badge.high-sodium {
+  background: rgba(244, 67, 54, 0.9);
+}
+
+.warning-badge.high-sugar {
+  background: rgba(233, 30, 99, 0.9);
+}
+
+/* Portion Control */
+.portion-control {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+}
+
+.portion-control label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.slider-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #666;
+  min-width: 35px;
+}
+
+#portion-slider {
+  flex: 1;
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(to right, #4caf50, #8bc34a);
+  border-radius: 10px;
+  outline: none;
+}
+
+#portion-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  background: #fff;
+  border: 3px solid #4caf50;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#portion-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  background: #fff;
+  border: 3px solid #4caf50;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.portion-display {
+  text-align: center;
+  margin-top: 8px;
+}
+
+#portion-value {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #4caf50;
+  padding: 5px 20px;
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 12px;
+}
+
+/* Nutrition Grid */
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.nutrition-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+
+.nutrition-item:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.nutrition-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.nutrition-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nutrition-label {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.nutrition-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  color: #222;
+}
+
+.close-btn {
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.2);
+  transform: rotate(90deg);
+}
+
+/* Bookmarks List */
+.bookmarks-list {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.empty-message {
+  text-align: center;
+  color: #999;
+  font-size: 1rem;
+  padding: 40px 20px;
+}
+
+.bookmark-item {
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 14px;
+  padding: 15px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bookmark-item-info h3 {
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.bookmark-item-info p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.remove-bookmark-btn {
+  background: rgba(244, 67, 54, 0.15);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  color: #f44336;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.remove-bookmark-btn:hover {
+  background: rgba(244, 67, 54, 0.9);
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  #app-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .calorie-value {
+    font-size: 3rem;
+  }
+
+  .nutrition-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Advanced Warning Animations */
+@keyframes warningPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(244, 67, 54, 0);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.warning-badges.active {
+  animation: warningPulse 2s ease-in-out infinite;
+}
+
+/* AR Detection Success Animation */
+@keyframes detectSuccess {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.nutrition-panel.detected {
+  animation: detectSuccess 0.5s ease-out;
+}
+
+/* iOS Safari fixes */
+@supports (-webkit-touch-callout: none) {
+  body {
+    height: -webkit-fill-available;
+  }
+}

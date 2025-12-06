@@ -17,12 +17,14 @@ Untuk setiap makanan, siapkan gambar dengan kriteria:
 - **Kompleksitas**: Hindari gambar terlalu polos atau terlalu rumit
 
 ### Contoh Gambar Yang Bagus:
+
 - Logo burger dengan outline jelas
 - Ikon kentang goreng dengan detail
 - Simbol minuman soda yang unik
 - Packaging produk dengan desain khusus
 
 ### Yang Harus Dihindari:
+
 - Background putih polos
 - Warna yang terlalu mirip
 - Gambar blur atau low quality
@@ -41,6 +43,7 @@ Untuk setiap makanan, siapkan gambar dengan kriteria:
 3. Klik "Download Marker"
 
 4. Simpan file .patt dengan nama:
+
    - `pattern-burger.patt`
    - `pattern-fries.patt`
    - `pattern-soda.patt`
@@ -54,16 +57,19 @@ Untuk setiap makanan, siapkan gambar dengan kriteria:
 Untuk gambar yang lebih kompleks, gunakan AR.js NFT:
 
 1. Install AR.js NFT Compiler:
+
 ```bash
 npm install -g nft-marker-creator
 ```
 
 2. Generate NFT marker:
+
 ```bash
 nft-marker-creator --image path/to/marker-image.jpg --output assets/markers/marker-name
 ```
 
 3. Update HTML untuk menggunakan NFT marker:
+
 ```html
 <a-nft
   type="nft"
@@ -72,7 +78,7 @@ nft-marker-creator --image path/to/marker-image.jpg --output assets/markers/mark
   smoothCount="10"
   smoothTolerance=".01"
   smoothThreshold="5"
->
+></a-nft>
 ```
 
 ---
@@ -82,6 +88,7 @@ nft-marker-creator --image path/to/marker-image.jpg --output assets/markers/mark
 1. Buat dokumen A4 di Photoshop/Canva
 
 2. Pasang gambar marker dengan ukuran:
+
    - **Minimum**: 10cm x 10cm
    - **Recommended**: 15cm x 15cm
    - **Maximum**: 20cm x 20cm
@@ -109,6 +116,7 @@ nft-marker-creator --image path/to/marker-image.jpg --output assets/markers/mark
    - ✅ Data sesuai dengan makanan
 
 ### Troubleshooting:
+
 - **Marker tidak terdeteksi**: Tingkatkan pencahayaan, pastikan marker flat
 - **Tracking goyang**: Gunakan marker lebih besar atau improve contrast
 - **Deteksi lambat**: Regenerate pattern dengan gambar yang lebih simple
@@ -164,6 +172,7 @@ Print Hiro marker dari: https://raw.githubusercontent.com/AR-js-org/AR.js/master
 ---
 
 **Next Steps:**
+
 1. Generate marker patterns menggunakan tool di atas
 2. Replace placeholder patterns di `assets/markers/`
 3. Test di device fisik dengan marker printed

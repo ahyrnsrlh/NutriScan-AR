@@ -48,7 +48,9 @@ class ARHandler {
   waitForARjs() {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
-        reject(new Error("AR.js tidak dapat dimuat dalam waktu yang ditentukan"));
+        reject(
+          new Error("AR.js tidak dapat dimuat dalam waktu yang ditentukan")
+        );
       }, 10000);
 
       const checkInterval = setInterval(() => {

@@ -5,12 +5,14 @@
 Sebelum deploy ke production, pastikan:
 
 ### 1. AR Marker Setup ✅
+
 - [ ] Generate custom .patt files untuk semua marker
 - [ ] Test marker detection di berbagai device (Android & iOS)
 - [ ] Print marker dengan kualitas tinggi
 - [ ] Dokumentasi cara penggunaan marker untuk end-user
 
 ### 2. Code Optimization ✅
+
 - [ ] Minify JavaScript files
 - [ ] Optimize CSS files
 - [ ] Compress marker pattern files
@@ -18,6 +20,7 @@ Sebelum deploy ke production, pastikan:
 - [ ] Enable production error handling
 
 ### 3. Performance Testing ✅
+
 - [ ] Test di low-end device (RAM < 4GB)
 - [ ] Test di koneksi lambat (3G)
 - [ ] Verify camera initialization < 3 detik
@@ -25,12 +28,14 @@ Sebelum deploy ke production, pastikan:
 - [ ] Memory usage monitoring
 
 ### 4. Browser Compatibility ✅
+
 - [ ] Chrome Android (latest)
 - [ ] Safari iOS (latest)
 - [ ] Samsung Internet
 - [ ] Firefox Mobile (optional)
 
 ### 5. Security & Privacy ✅
+
 - [ ] HTTPS enabled (mandatory untuk camera access)
 - [ ] Camera permission prompt user-friendly
 - [ ] No data tracking tanpa consent
@@ -71,6 +76,7 @@ NutriScan AR (Production)
 ## 📱 Cara Kerja Production
 
 ### Flow 1: User Opens App
+
 ```
 User mengakses URL
     ↓
@@ -84,6 +90,7 @@ Display "Arahkan ke marker" hint
 ```
 
 ### Flow 2: Marker Detection
+
 ```
 User arahkan kamera ke marker makanan
     ↓
@@ -101,6 +108,7 @@ Real-time portion adjustment available
 ```
 
 ### Flow 3: Health Warning System
+
 ```
 Nutrition data loaded
     ↓
@@ -115,6 +123,7 @@ Update saat portion slider berubah
 ```
 
 ### Flow 4: Bookmark Feature
+
 ```
 User tap bookmark button
     ↓
@@ -137,6 +146,7 @@ Available di modal "Item Tersimpan"
 ## 🔧 Environment Setup
 
 ### Development
+
 ```bash
 # Clone repository
 git clone https://github.com/ahyrnsrlh/NutriScan-AR.git
@@ -152,6 +162,7 @@ python -m http.server 8000
 ```
 
 ### Production Deploy (Vercel)
+
 ```bash
 # Login ke Vercel
 vercel login
@@ -169,20 +180,21 @@ git push origin main
 
 ## 📊 Performance Targets
 
-| Metric | Target | Status |
-|--------|--------|--------|
-| First Contentful Paint | < 1.5s | ✅ |
-| Camera Init | < 3s | ✅ |
-| Marker Detection | < 1s | ✅ |
-| Panel Render | < 200ms | ✅ |
-| Memory Usage | < 150MB | ⚠️ Test |
-| FPS (AR tracking) | > 30fps | ⚠️ Test |
+| Metric                 | Target  | Status  |
+| ---------------------- | ------- | ------- |
+| First Contentful Paint | < 1.5s  | ✅      |
+| Camera Init            | < 3s    | ✅      |
+| Marker Detection       | < 1s    | ✅      |
+| Panel Render           | < 200ms | ✅      |
+| Memory Usage           | < 150MB | ⚠️ Test |
+| FPS (AR tracking)      | > 30fps | ⚠️ Test |
 
 ---
 
 ## 🧪 Testing Scenarios
 
 ### 1. AR Marker Detection
+
 ```
 ✅ Marker terdeteksi dalam jarak 20-50cm
 ✅ Tracking stabil saat marker bergerak
@@ -192,6 +204,7 @@ git push origin main
 ```
 
 ### 2. Nutrition Display
+
 ```
 ✅ Data sesuai dengan marker yang dideteksi
 ✅ Kalori display dengan format correct
@@ -201,6 +214,7 @@ git push origin main
 ```
 
 ### 3. UI/UX
+
 ```
 ✅ Responsive di berbagai screen size
 ✅ Glassmorphism effect smooth
@@ -210,6 +224,7 @@ git push origin main
 ```
 
 ### 4. Edge Cases
+
 ```
 ✅ Koneksi lambat: graceful fallback
 ✅ Camera permission ditolak: error message
@@ -223,8 +238,10 @@ git push origin main
 ## 🐛 Common Issues & Solutions
 
 ### Issue 1: Marker Tidak Terdeteksi
+
 **Symptom:** Camera aktif tapi panel tidak muncul
 **Solution:**
+
 - Pastikan marker memiliki contrast tinggi
 - Tingkatkan pencahayaan ruangan
 - Marker harus flat, tidak bengkok
@@ -232,24 +249,30 @@ git push origin main
 - Generate ulang .patt file dengan quality lebih baik
 
 ### Issue 2: Tracking Tidak Stabil
+
 **Symptom:** Panel overlay goyang/jitter
 **Solution:**
+
 - Perbesar ukuran marker (minimum 15x15cm)
 - Improve marker image contrast
 - Stabilkan tangan saat scan
 - Reduce camera resolution jika device lemah
 
 ### Issue 3: Performance Lambat
+
 **Symptom:** FPS rendah, lag saat tracking
 **Solution:**
+
 - Reduce AR scene complexity
 - Lower camera resolution
 - Disable backdrop-filter di low-end device
 - Use requestAnimationFrame untuk smooth updates
 
 ### Issue 4: iOS Safari Issues
+
 **Symptom:** Camera tidak jalan di iPhone
 **Solution:**
+
 - Pastikan HTTPS enabled
 - Add meta tag `apple-mobile-web-app-capable`
 - Request permission sebelum init AR
@@ -260,12 +283,15 @@ git push origin main
 ## 📈 Monitoring & Analytics
 
 ### Key Metrics to Track
+
 1. **User Engagement**
+
    - Berapa lama user scan marker
    - Berapa banyak makanan di-scan per session
    - Bookmark usage rate
 
 2. **Technical Performance**
+
    - Marker detection success rate
    - Average detection time
    - Camera initialization failures
@@ -281,6 +307,7 @@ git push origin main
 ## 🚀 Launch Checklist
 
 ### Pre-Launch
+
 - [ ] All custom markers generated & tested
 - [ ] Nutrition data verified & complete
 - [ ] Cross-browser testing passed
@@ -289,6 +316,7 @@ git push origin main
 - [ ] User documentation ready
 
 ### Launch Day
+
 - [ ] Deploy to production URL
 - [ ] DNS configured (jika custom domain)
 - [ ] SSL certificate verified
@@ -297,6 +325,7 @@ git push origin main
 - [ ] Support channel ready
 
 ### Post-Launch
+
 - [ ] Monitor error logs
 - [ ] Collect user feedback
 - [ ] Track performance metrics
@@ -317,6 +346,7 @@ git push origin main
 ## 🆘 Support
 
 Jika ada masalah saat production:
+
 1. Check browser console untuk error details
 2. Verify HTTPS & camera permissions
 3. Test dengan Hiro marker untuk isolate issue
