@@ -70,10 +70,7 @@ class ARHandler {
   setupMarkerListeners() {
     const markerIds = [
       "marker-burger",
-      "marker-fries",
-      "marker-soda",
-      "marker-chicken",
-      "marker-pizza",
+      "marker-fries"
     ];
 
     console.log(`🔍 Setting up ${markerIds.length} markers...`);

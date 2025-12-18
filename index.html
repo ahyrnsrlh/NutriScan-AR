@@ -11,8 +11,8 @@
     <title>NutriScan AR - Pemindai Gizi Makanan</title>
 
     <!-- AR.js and A-Frame -->
-    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.4.2/dist/aframe-master.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@3.4.5/aframe/build/aframe-ar.min.js"></script>
 
     <!-- Utility Scripts (Load first) -->
     <script src="js/error-handler.js"></script>
@@ -59,9 +59,9 @@
       <a-scene
         id="ar-scene"
         embedded
-        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono; trackingMethod: best;"
         vr-mode-ui="enabled: false"
-        renderer="logarithmicDepthBuffer: true; precision: medium;"
+        renderer="logarithmicDepthBuffer: true; precision: medium; antialias: false;"
         loading-screen="enabled: false"
       >
         <!-- Camera -->
@@ -80,65 +80,38 @@
             class="ar-3d-card"
             position="0 0.5 0"
             rotation="-90 0 0"
-            width="2.5"
-            height="2"
+            width="2"
+            height="1.5"
             color="#1e293b"
-            opacity="0.95"
+            opacity="0.9"
             data-food="burger"
             visible="false"
           >
-            <!-- Food Icon & Name -->
+            <!-- Food Name & Icon -->
             <a-text
-              value="🍔"
+              value="🍔 Burger Klasik"
               align="center"
               color="#fbbf24"
-              position="0 0.65 0.01"
-              scale="2.5 2.5 2.5"
-            ></a-text>
-            <a-text
-              value="Burger Klasik"
-              align="center"
-              color="#ffffff"
               position="0 0.4 0.01"
-              scale="1.2 1.2 1.2"
-              font="roboto"
+              scale="1 1 1"
             ></a-text>
             
-            <!-- Calories (Large) -->
+            <!-- Calories -->
             <a-text
               value="520 kcal"
               align="center"
-              color="#fbbf24"
-              position="0 0.1 0.01"
-              scale="1.5 1.5 1.5"
-              font="roboto"
+              color="#ffffff"
+              position="0 0 0.01"
+              scale="1.3 1.3 1.3"
             ></a-text>
             
-            <!-- Macronutrients -->
+            <!-- Key Nutrients -->
             <a-text
-              value="Protein: 22g  |  Fat: 30g  |  Carbs: 40g"
+              value="P:22g F:30g C:40g"
               align="center"
               color="#94a3b8"
-              position="0 -0.2 0.01"
+              position="0 -0.35 0.01"
               scale="0.8 0.8 0.8"
-            ></a-text>
-            
-            <!-- Additional Info -->
-            <a-text
-              value="Sugar: 8g  |  Sodium: 950mg"
-              align="center"
-              color="#64748b"
-              position="0 -0.5 0.01"
-              scale="0.7 0.7 0.7"
-            ></a-text>
-            
-            <!-- Serving Size -->
-            <a-text
-              value="1 burger (200 g)"
-              align="center"
-              color="#475569"
-              position="0 -0.75 0.01"
-              scale="0.6 0.6 0.6"
             ></a-text>
           </a-plane>
         </a-marker>
@@ -156,296 +129,38 @@
             class="ar-3d-card"
             position="0 0.5 0"
             rotation="-90 0 0"
-            width="2.5"
-            height="2"
+            width="2"
+            height="1.5"
             color="#1e293b"
-            opacity="0.95"
+            opacity="0.9"
             data-food="fries"
             visible="false"
           >
-            <!-- Food Icon & Name -->
+            <!-- Food Name & Icon -->
             <a-text
-              value="🍟"
+              value="🍟 Kentang Goreng"
               align="center"
               color="#fbbf24"
-              position="0 0.65 0.01"
-              scale="2.5 2.5 2.5"
-            ></a-text>
-            <a-text
-              value="Kentang Goreng"
-              align="center"
-              color="#ffffff"
               position="0 0.4 0.01"
-              scale="1.2 1.2 1.2"
-              font="roboto"
+              scale="1 1 1"
             ></a-text>
             
-            <!-- Calories (Large) -->
+            <!-- Calories -->
             <a-text
               value="365 kcal"
               align="center"
-              color="#fbbf24"
-              position="0 0.1 0.01"
-              scale="1.5 1.5 1.5"
-              font="roboto"
-            ></a-text>
-            
-            <!-- Macronutrients -->
-            <a-text
-              value="Protein: 4g  |  Fat: 17g  |  Carbs: 48g"
-              align="center"
-              color="#94a3b8"
-              position="0 -0.2 0.01"
-              scale="0.8 0.8 0.8"
-            ></a-text>
-            
-            <!-- Additional Info -->
-            <a-text
-              value="Sugar: 0.3g  |  Sodium: 246mg"
-              align="center"
-              color="#64748b"
-              position="0 -0.5 0.01"
-              scale="0.7 0.7 0.7"
-            ></a-text>
-            
-            <!-- Serving Size -->
-            <a-text
-              value="1 porsi sedang (117 g)"
-              align="center"
-              color="#475569"
-              position="0 -0.75 0.01"
-              scale="0.6 0.6 0.6"
-            ></a-text>
-          </a-plane>
-        </a-marker>
-
-        <!-- Marker: Soda (custom pattern - replace di production) -->
-        <a-marker
-          id="marker-soda"
-          type="pattern"
-          url="assets/markers/pattern-soda.patt"
-          raycaster="objects: .clickable"
-          emitevents="true"
-          cursor="fuse: false; rayOrigin: mouse;"
-        >
-          <!-- 3D Nutrition Card -->
-          <a-plane
-            class="ar-3d-card"
-            position="0 0.5 0"
-            rotation="-90 0 0"
-            width="2.5"
-            height="2"
-            color="#1e293b"
-            opacity="0.95"
-            data-food="soda"
-            visible="false"
-          >
-            <!-- Food Icon & Name -->
-            <a-text
-              value="🥤"
-              align="center"
-              color="#ef4444"
-              position="0 0.65 0.01"
-              scale="2.5 2.5 2.5"
-            ></a-text>
-            <a-text
-              value="Minuman Soda"
-              align="center"
               color="#ffffff"
-              position="0 0.4 0.01"
-              scale="1.2 1.2 1.2"
-              font="roboto"
+              position="0 0 0.01"
+              scale="1.3 1.3 1.3"
             ></a-text>
             
-            <!-- Calories (Large) -->
+            <!-- Key Nutrients -->
             <a-text
-              value="140 kcal"
-              align="center"
-              color="#ef4444"
-              position="0 0.1 0.01"
-              scale="1.5 1.5 1.5"
-              font="roboto"
-            ></a-text>
-            
-            <!-- Macronutrients -->
-            <a-text
-              value="Protein: 0g  |  Fat: 0g  |  Carbs: 39g"
+              value="P:4g F:17g C:48g"
               align="center"
               color="#94a3b8"
-              position="0 -0.2 0.01"
+              position="0 -0.35 0.01"
               scale="0.8 0.8 0.8"
-            ></a-text>
-            
-            <!-- Additional Info -->
-            <a-text
-              value="Sugar: 39g  |  Sodium: 45mg"
-              align="center"
-              color="#64748b"
-              position="0 -0.5 0.01"
-              scale="0.7 0.7 0.7"
-            ></a-text>
-            
-            <!-- Serving Size -->
-            <a-text
-              value="1 gelas (355 ml)"
-              align="center"
-              color="#475569"
-              position="0 -0.75 0.01"
-              scale="0.6 0.6 0.6"
-            ></a-text>
-          </a-plane>
-        </a-marker>
-
-        <!-- Marker: Chicken (custom pattern - replace di production) -->
-        <a-marker
-          id="marker-chicken"
-          type="pattern"
-          url="assets/markers/pattern-chicken.patt"
-          raycaster="objects: .clickable"
-          emitevents="true"
-          cursor="fuse: false; rayOrigin: mouse;"
-        >
-          <!-- 3D Nutrition Card -->
-          <a-plane
-            class="ar-3d-card"
-            position="0 0.5 0"
-            rotation="-90 0 0"
-            width="2.5"
-            height="2"
-            color="#1e293b"
-            opacity="0.95"
-            data-food="chicken"
-            visible="false"
-          >
-            <!-- Food Icon & Name -->
-            <a-text
-              value="🍗"
-              align="center"
-              color="#f97316"
-              position="0 0.65 0.01"
-              scale="2.5 2.5 2.5"
-            ></a-text>
-            <a-text
-              value="Ayam Goreng"
-              align="center"
-              color="#ffffff"
-              position="0 0.4 0.01"
-              scale="1.2 1.2 1.2"
-              font="roboto"
-            ></a-text>
-            
-            <!-- Calories (Large) -->
-            <a-text
-              value="430 kcal"
-              align="center"
-              color="#f97316"
-              position="0 0.1 0.01"
-              scale="1.5 1.5 1.5"
-              font="roboto"
-            ></a-text>
-            
-            <!-- Macronutrients -->
-            <a-text
-              value="Protein: 30g  |  Fat: 27g  |  Carbs: 16g"
-              align="center"
-              color="#94a3b8"
-              position="0 -0.2 0.01"
-              scale="0.8 0.8 0.8"
-            ></a-text>
-            
-            <!-- Additional Info -->
-            <a-text
-              value="Sugar: 0g  |  Sodium: 1190mg"
-              align="center"
-              color="#64748b"
-              position="0 -0.5 0.01"
-              scale="0.7 0.7 0.7"
-            ></a-text>
-            
-            <!-- Serving Size -->
-            <a-text
-              value="2 potong (148 g)"
-              align="center"
-              color="#475569"
-              position="0 -0.75 0.01"
-              scale="0.6 0.6 0.6"
-            ></a-text>
-          </a-plane>
-        </a-marker>
-
-        <!-- Marker: Pizza (custom pattern - replace di production) -->
-        <a-marker
-          id="marker-pizza"
-          type="pattern"
-          url="assets/markers/pattern-pizza.patt"
-          raycaster="objects: .clickable"
-          emitevents="true"
-          cursor="fuse: false; rayOrigin: mouse;"
-        >
-          <!-- 3D Nutrition Card -->
-          <a-plane
-            class="ar-3d-card"
-            position="0 0.5 0"
-            rotation="-90 0 0"
-            width="2.5"
-            height="2"
-            color="#1e293b"
-            opacity="0.95"
-            data-food="pizza"
-            visible="false"
-          >
-            <!-- Food Icon & Name -->
-            <a-text
-              value="🍕"
-              align="center"
-              color="#ef4444"
-              position="0 0.65 0.01"
-              scale="2.5 2.5 2.5"
-            ></a-text>
-            <a-text
-              value="Pizza Slice"
-              align="center"
-              color="#ffffff"
-              position="0 0.4 0.01"
-              scale="1.2 1.2 1.2"
-              font="roboto"
-            ></a-text>
-            
-            <!-- Calories (Large) -->
-            <a-text
-              value="285 kcal"
-              align="center"
-              color="#ef4444"
-              position="0 0.1 0.01"
-              scale="1.5 1.5 1.5"
-              font="roboto"
-            ></a-text>
-            
-            <!-- Macronutrients -->
-            <a-text
-              value="Protein: 12g  |  Fat: 10g  |  Carbs: 36g"
-              align="center"
-              color="#94a3b8"
-              position="0 -0.2 0.01"
-              scale="0.8 0.8 0.8"
-            ></a-text>
-            
-            <!-- Additional Info -->
-            <a-text
-              value="Sugar: 4g  |  Sodium: 640mg"
-              align="center"
-              color="#64748b"
-              position="0 -0.5 0.01"
-              scale="0.7 0.7 0.7"
-            ></a-text>
-            
-            <!-- Serving Size -->
-            <a-text
-              value="1 potong (107 g)"
-              align="center"
-              color="#475569"
-              position="0 -0.75 0.01"
-              scale="0.6 0.6 0.6"
             ></a-text>
           </a-plane>
         </a-marker>

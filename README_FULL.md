@@ -69,7 +69,7 @@
 1. Buka URL di smartphone (Chrome/Safari)
 2. Izinkan akses kamera
 3. Download & print marker:
-   - **Hiro Marker** (Burger): [Download](https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png)
+   - **Hiro Marker** (Burger): [Download](https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/)
    - **Kanji Marker** (Kentang): [Download](https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/kanji.png)
 4. Arahkan kamera ke marker yang sudah di-print
 5. Panel gizi akan muncul otomatis!
