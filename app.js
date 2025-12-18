@@ -20,49 +20,64 @@ const bookmarksList = document.getElementById("bookmarks-list");
 async function init() {
   try {
     console.log("🚀 Memulai NutriScan AR Production...");
+    
+    // Show loading
+    LoadingManager.show();
+    LoadingManager.updateState('init');
 
     // Check if running in secure context (HTTPS or localhost)
-    if (!window.isSecureContext) {
-      showError("AR memerlukan HTTPS. Silakan gunakan koneksi aman.");
-      return;
+    if (!SecurityUtils.isSecureContext()) {
+      throw new Error("AR memerlukan HTTPS. Gunakan https://nutriscanid.vercel.app");
     }
 
     // Check browser support
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      showError(
-        "Browser Anda tidak mendukung akses kamera. Silakan gunakan Chrome atau Safari."
-      );
-      return;
+      throw new Error("Browser tidak mendukung akses kamera. Gunakan Chrome atau Safari.");
     }
 
-    // Show loading indicator
-    showToast("Memuat AR Engine...", "info");
-
     // Load nutrition data
+    LoadingManager.updateState('data');
+    PerformanceMonitor.startMeasure('nutrition_data_load');
     await loadNutritionData();
+    PerformanceMonitor.endMeasure('nutrition_data_load');
     console.log("✅ Data nutrisi dimuat");
 
     // Initialize AR Handler
+    LoadingManager.updateState('ar');
+    PerformanceMonitor.startMeasure('ar_initialization');
     const arInitialized = await arHandler.init();
+    PerformanceMonitor.endMeasure('ar_initialization');
+    
     if (!arInitialized) {
       throw new Error("AR Handler gagal diinisialisasi");
     }
     console.log("✅ AR Handler siap");
 
     // Setup event listeners
+    LoadingManager.updateState('markers');
     setupEventListeners();
-
-    // Setup AR event listeners
     setupAREventListeners();
 
     // Load bookmarks
     loadBookmarks();
 
+    // Ready!
+    LoadingManager.updateState('ready');
     console.log("✅ Aplikasi berhasil diinisialisasi");
-    showToast("AR siap! Arahkan kamera ke marker makanan", "success");
+    
+    // Hide loading after short delay
+    setTimeout(() => {
+      LoadingManager.hide();
+      ErrorHandler.showInfo("AR siap! Arahkan kamera ke marker makanan", 3000);
+    }, 800);
+    
+    // Log performance summary
+    PerformanceMonitor.logSummary();
+    
   } catch (error) {
     console.error("❌ Error inisialisasi:", error);
-    showError("Gagal menginisialisasi AR: " + error.message);
+    ErrorHandler.handle(error, "Critical - App Initialization");
+    LoadingManager.showError(ErrorHandler.getUserFriendlyMessage(error));
   }
 }
 
@@ -138,19 +153,41 @@ function showError(message) {
 // Load nutrition data from JSON
 async function loadNutritionData() {
   try {
+    PerformanceMonitor.startMeasure('fetch_nutrition_data');
     const response = await fetch("data/nutrition.json");
-    nutritionData = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    PerformanceMonitor.endMeasure('fetch_nutrition_data');
+    
+    // Validate each food item
+    PerformanceMonitor.startMeasure('validate_nutrition_data');
+    for (const [foodId, foodData] of Object.entries(data)) {
+      const validation = SecurityUtils.validateNutritionData(foodId, foodData);
+      if (!validation.valid) {
+        throw new Error(`Invalid data for ${foodId}: ${validation.error}`);
+      }
+    }
+    PerformanceMonitor.endMeasure('validate_nutrition_data');
+    
+    nutritionData = data;
     console.log(
-      "Nutrition data loaded:",
+      "✅ Nutrition data loaded and validated:",
       Object.keys(nutritionData).length,
       "items"
     );
   } catch (error) {
-    console.error("Error loading nutrition data:", error);
+    console.error("❌ Failed to load nutrition data:", error);
+    ErrorHandler.handle(error, "Data Loading");
+    
     // Fallback data
+    console.warn("⚠️ Using fallback nutrition data");
     nutritionData = {
       burger: {
-        name: "Classic Burger",
+        name: "Burger Klasik",
         serving: "1 burger (200 g)",
         calories: 520,
         protein_g: 22,
@@ -362,9 +399,22 @@ function getSavedBookmarks() {
 // Save bookmarks to localStorage
 function saveBookmarks(bookmarks) {
   try {
-    localStorage.setItem("nutritionBookmarks", JSON.stringify(bookmarks));
+    SecureStorage.set("bookmarks", bookmarks);
+    console.log("✅ Bookmarks saved securely");
   } catch (error) {
-    console.error("Error saving bookmarks:", error);
+    console.error("❌ Error saving bookmarks:", error);
+    ErrorHandler.showWarning("Gagal menyimpan bookmark");
+  }
+}
+
+// Get saved bookmarks
+function getSavedBookmarks() {
+  try {
+    const bookmarks = SecureStorage.get("bookmarks");
+    return bookmarks || [];
+  } catch (error) {
+    console.error("❌ Error loading bookmarks:", error);
+    return [];
   }
 }
 
