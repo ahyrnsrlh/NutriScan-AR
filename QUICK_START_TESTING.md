@@ -3,23 +3,28 @@
 ## ⚡ IMMEDIATE TESTING (5 Minutes)
 
 ### **1. Open App on Smartphone**
+
 ```
 https://nutriscanid.vercel.app
 ```
-*Wait 1-2 minutes for Vercel deployment*
+
+_Wait 1-2 minutes for Vercel deployment_
 
 ---
 
 ### **2. First Load Experience**
 
 **What You Should See:**
+
 1. ✅ **Loading Overlay** appears
+
    - Spinner animation
    - "Memuat NutriScan AR"
    - Progress bar moving
    - Status text changing
 
 2. ✅ **Loading States Progression**:
+
    ```
    "Menginisialisasi aplikasi..." (10%)
    "Memuat data nutrisi..." (70%)
@@ -29,6 +34,7 @@ https://nutriscanid.vercel.app
    ```
 
 3. ✅ **Camera Permission Prompt**
+
    - Browser akan minta izin kamera
    - Grant permission
 
@@ -43,6 +49,7 @@ https://nutriscanid.vercel.app
 ### **3. Test Without Marker (Quick Test)**
 
 **Click Test Button (🧪)**:
+
 - Located in header (blue background)
 - Next to bookmark button (📚)
 
@@ -54,6 +61,7 @@ https://nutriscanid.vercel.app
 ✅ Warning badges appear (if applicable)
 
 **Console Should Show**:
+
 ```javascript
 🧪 TEST BUTTON CLICKED - Simulating burger detection
 🍔 showNutritionPanel called with foodId: burger
@@ -67,6 +75,7 @@ https://nutriscanid.vercel.app
 ### **4. Test Error Handling**
 
 #### **Scenario A: Deny Camera Permission**
+
 1. Refresh page
 2. When permission prompt appears → **Deny**
 3. Should see:
@@ -76,6 +85,7 @@ https://nutriscanid.vercel.app
    - "Tutup" button
 
 #### **Scenario B: Airplane Mode (Network Error)**
+
 1. Enable airplane mode
 2. Refresh page
 3. Should see:
@@ -84,10 +94,13 @@ https://nutriscanid.vercel.app
    - Fallback data loaded (burger only)
 
 #### **Scenario C: Force Error**
+
 Open console, type:
+
 ```javascript
-ErrorHandler.handle(new Error('Test error'), 'Test Context');
+ErrorHandler.handle(new Error("Test error"), "Test Context");
 ```
+
 Should see error overlay with message.
 
 ---
@@ -109,6 +122,7 @@ PerformanceMonitor.logSummary();
 ```
 
 **Look for these operations**:
+
 ```
 ✅ fetch_nutrition_data    (<500ms)
 ✅ validate_nutrition_data (<50ms)
@@ -117,6 +131,7 @@ PerformanceMonitor.logSummary();
 ```
 
 **Color Coding**:
+
 - ✅ Green: <100ms (Fast)
 - ⚠️ Yellow: 100-500ms (Medium)
 - 🐌 Red: >500ms (Slow)
@@ -128,6 +143,7 @@ PerformanceMonitor.logSummary();
 **Open Console**, test these:
 
 #### **A. HTML Sanitization**
+
 ```javascript
 const unsafe = '<script>alert("XSS")</script>';
 const safe = SecurityUtils.sanitizeHTML(unsafe);
@@ -136,27 +152,29 @@ console.log(safe);
 ```
 
 #### **B. Data Validation**
+
 ```javascript
 const invalidData = {
   name: "Test",
-  calories: -100  // Invalid (negative)
+  calories: -100, // Invalid (negative)
 };
-const result = SecurityUtils.validateNutritionData('test', invalidData);
+const result = SecurityUtils.validateNutritionData("test", invalidData);
 console.log(result);
 // Should output: { valid: false, error: "Missing required fields: ..." }
 ```
 
 #### **C. Secure Storage**
+
 ```javascript
 // Save data
-SecureStorage.set('test', { secret: 'data' });
+SecureStorage.set("test", { secret: "data" });
 
 // Check localStorage (should be encoded)
-console.log(localStorage.getItem('nutriscan_test'));
+console.log(localStorage.getItem("nutriscan_test"));
 // Output: base64 encoded string
 
 // Retrieve data (should be decoded)
-console.log(SecureStorage.get('test'));
+console.log(SecureStorage.get("test"));
 // Output: { secret: 'data' }
 
 // Check usage
@@ -172,13 +190,14 @@ console.log(SecureStorage.getUsageInfo());
 
 ```javascript
 // Warning toast (yellow)
-ErrorHandler.showWarning('This is a warning message', 5000);
+ErrorHandler.showWarning("This is a warning message", 5000);
 
 // Info toast (blue)
-ErrorHandler.showInfo('This is an info message', 3000);
+ErrorHandler.showInfo("This is an info message", 3000);
 ```
 
 **Expected**:
+
 - Toast slides up from bottom
 - Displays for specified duration
 - Auto-dismisses
@@ -189,6 +208,7 @@ ErrorHandler.showInfo('This is an info message', 3000);
 ## 🔍 CONSOLE LOGS TO VERIFY
 
 ### **On Successful Load:**
+
 ```
 🚀 Memulai NutriScan AR Production...
 ⏱️ Start: nutrition_data_load
@@ -216,6 +236,7 @@ ErrorHandler.showInfo('This is an info message', 3000);
 ```
 
 ### **On Error:**
+
 ```
 ❌ Error in [Context]: [Error Details]
 ⚠️ Using fallback nutrition data
@@ -246,29 +267,37 @@ After testing, verify:
 ## ⚠️ TROUBLESHOOTING
 
 ### **Issue: Loading stuck at one state**
+
 **Solution**: Check console for errors. Likely AR.js failed to load.
 
 ### **Issue: No console logs appear**
-**Solution**: 
+
+**Solution**:
+
 1. Open DevTools (F12)
 2. Go to Console tab
 3. Refresh page
 4. Check "Preserve log" is enabled
 
 ### **Issue: Test button doesn't work**
+
 **Solution**: Check:
+
 ```javascript
-document.getElementById('test-btn')  // Should exist
-nutritionData  // Should have data
+document.getElementById("test-btn"); // Should exist
+nutritionData; // Should have data
 ```
 
 ### **Issue: Error overlay doesn't dismiss**
+
 **Solution**: Click "Tutup" button or run:
+
 ```javascript
 ErrorHandler.dismissError();
 ```
 
 ### **Issue: Performance logs show RED (>500ms)**
+
 **Solution**: Normal on first load. Subsequent loads should be faster.
 
 ---
@@ -276,6 +305,7 @@ ErrorHandler.dismissError();
 ## 📱 MOBILE-SPECIFIC TESTS
 
 ### **iOS Safari**:
+
 1. Test camera permission flow
 2. Check safe-area-inset (notch/island)
 3. Verify haptic feedback (vibration)
@@ -283,6 +313,7 @@ ErrorHandler.dismissError();
 5. Check add-to-homescreen
 
 ### **Android Chrome**:
+
 1. Test camera permission flow
 2. Verify notification permissions
 3. Check PWA install prompt
@@ -293,13 +324,13 @@ ErrorHandler.dismissError();
 
 ## 🎯 EXPECTED PERFORMANCE TARGETS
 
-| Operation | Target | Acceptable | Slow |
-|-----------|--------|------------|------|
-| **Page Load** | <2s | <3s | >3s |
-| **Data Load** | <300ms | <500ms | >500ms |
-| **Validation** | <30ms | <50ms | >50ms |
-| **AR Init** | <1.5s | <2s | >2s |
-| **Marker Detection** | <300ms | <500ms | >500ms |
+| Operation            | Target | Acceptable | Slow   |
+| -------------------- | ------ | ---------- | ------ |
+| **Page Load**        | <2s    | <3s        | >3s    |
+| **Data Load**        | <300ms | <500ms     | >500ms |
+| **Validation**       | <30ms  | <50ms      | >50ms  |
+| **AR Init**          | <1.5s  | <2s        | >2s    |
+| **Marker Detection** | <300ms | <500ms     | >500ms |
 
 ---
 
@@ -308,6 +339,7 @@ ErrorHandler.dismissError();
 **Congratulations!** 🎉
 
 Phase 1 Implementation is successful. You now have:
+
 - ✅ Production-grade error handling
 - ✅ Professional loading states
 - ✅ Performance monitoring
@@ -321,6 +353,7 @@ Phase 1 Implementation is successful. You now have:
 ## ❌ IF TESTS FAIL
 
 **Report Issues With**:
+
 1. Screenshot of error
 2. Console logs (copy all)
 3. Device info (model, OS, browser)
@@ -328,6 +361,7 @@ Phase 1 Implementation is successful. You now have:
 5. Expected vs actual behavior
 
 **Common Fixes**:
+
 - Hard refresh: Ctrl+Shift+R (PC) / Cmd+Shift+R (Mac)
 - Clear cache and reload
 - Try incognito/private mode

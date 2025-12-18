@@ -67,7 +67,7 @@
         <!-- Camera -->
         <a-entity camera></a-entity>
 
-        <!-- Marker: Burger (menggunakan Hiro untuk demo) -->
+        <!-- Marker: Burger (menggunakan Hiro preset untuk demo) -->
         <a-marker
           id="marker-burger"
           preset="hiro"
@@ -75,15 +75,72 @@
           emitevents="true"
           cursor="fuse: false; rayOrigin: mouse;"
         >
+          <!-- 3D Nutrition Card -->
           <a-plane
-            class="ar-overlay"
-            position="0 0 0"
+            class="ar-3d-card"
+            position="0 0.5 0"
             rotation="-90 0 0"
-            width="1.5"
-            height="1"
-            material="color: #ffffff; opacity: 0; transparent: true"
+            width="2.5"
+            height="2"
+            color="#1e293b"
+            opacity="0.95"
             data-food="burger"
-          ></a-plane>
+            visible="false"
+          >
+            <!-- Food Icon & Name -->
+            <a-text
+              value="🍔"
+              align="center"
+              color="#fbbf24"
+              position="0 0.65 0.01"
+              scale="2.5 2.5 2.5"
+            ></a-text>
+            <a-text
+              value="Burger Klasik"
+              align="center"
+              color="#ffffff"
+              position="0 0.4 0.01"
+              scale="1.2 1.2 1.2"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Calories (Large) -->
+            <a-text
+              value="520 kcal"
+              align="center"
+              color="#fbbf24"
+              position="0 0.1 0.01"
+              scale="1.5 1.5 1.5"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Macronutrients -->
+            <a-text
+              value="Protein: 22g  |  Fat: 30g  |  Carbs: 40g"
+              align="center"
+              color="#94a3b8"
+              position="0 -0.2 0.01"
+              scale="0.8 0.8 0.8"
+            ></a-text>
+            
+            <!-- Additional Info -->
+            <a-text
+              value="Sugar: 8g  |  Sodium: 950mg"
+              align="center"
+              color="#64748b"
+              position="0 -0.5 0.01"
+              scale="0.7 0.7 0.7"
+            ></a-text>
+            
+            <!-- Serving Size -->
+            <a-text
+              value="1 burger (200 g)"
+              align="center"
+              color="#475569"
+              position="0 -0.75 0.01"
+              scale="0.6 0.6 0.6"
+            ></a-text>
+          </a-plane>
         </a-marker>
 
         <!-- Marker: Fries (menggunakan Kanji untuk demo) -->
@@ -94,15 +151,72 @@
           emitevents="true"
           cursor="fuse: false; rayOrigin: mouse;"
         >
+          <!-- 3D Nutrition Card -->
           <a-plane
-            class="ar-overlay"
-            position="0 0 0"
+            class="ar-3d-card"
+            position="0 0.5 0"
             rotation="-90 0 0"
-            width="1.5"
-            height="1"
-            material="color: #ffffff; opacity: 0; transparent: true"
+            width="2.5"
+            height="2"
+            color="#1e293b"
+            opacity="0.95"
             data-food="fries"
-          ></a-plane>
+            visible="false"
+          >
+            <!-- Food Icon & Name -->
+            <a-text
+              value="🍟"
+              align="center"
+              color="#fbbf24"
+              position="0 0.65 0.01"
+              scale="2.5 2.5 2.5"
+            ></a-text>
+            <a-text
+              value="Kentang Goreng"
+              align="center"
+              color="#ffffff"
+              position="0 0.4 0.01"
+              scale="1.2 1.2 1.2"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Calories (Large) -->
+            <a-text
+              value="365 kcal"
+              align="center"
+              color="#fbbf24"
+              position="0 0.1 0.01"
+              scale="1.5 1.5 1.5"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Macronutrients -->
+            <a-text
+              value="Protein: 4g  |  Fat: 17g  |  Carbs: 48g"
+              align="center"
+              color="#94a3b8"
+              position="0 -0.2 0.01"
+              scale="0.8 0.8 0.8"
+            ></a-text>
+            
+            <!-- Additional Info -->
+            <a-text
+              value="Sugar: 0.3g  |  Sodium: 246mg"
+              align="center"
+              color="#64748b"
+              position="0 -0.5 0.01"
+              scale="0.7 0.7 0.7"
+            ></a-text>
+            
+            <!-- Serving Size -->
+            <a-text
+              value="1 porsi sedang (117 g)"
+              align="center"
+              color="#475569"
+              position="0 -0.75 0.01"
+              scale="0.6 0.6 0.6"
+            ></a-text>
+          </a-plane>
         </a-marker>
 
         <!-- Marker: Soda (custom pattern - replace di production) -->
@@ -114,15 +228,72 @@
           emitevents="true"
           cursor="fuse: false; rayOrigin: mouse;"
         >
+          <!-- 3D Nutrition Card -->
           <a-plane
-            class="ar-overlay"
-            position="0 0 0"
+            class="ar-3d-card"
+            position="0 0.5 0"
             rotation="-90 0 0"
-            width="1.5"
-            height="1"
-            material="color: #ffffff; opacity: 0; transparent: true"
+            width="2.5"
+            height="2"
+            color="#1e293b"
+            opacity="0.95"
             data-food="soda"
-          ></a-plane>
+            visible="false"
+          >
+            <!-- Food Icon & Name -->
+            <a-text
+              value="🥤"
+              align="center"
+              color="#ef4444"
+              position="0 0.65 0.01"
+              scale="2.5 2.5 2.5"
+            ></a-text>
+            <a-text
+              value="Minuman Soda"
+              align="center"
+              color="#ffffff"
+              position="0 0.4 0.01"
+              scale="1.2 1.2 1.2"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Calories (Large) -->
+            <a-text
+              value="140 kcal"
+              align="center"
+              color="#ef4444"
+              position="0 0.1 0.01"
+              scale="1.5 1.5 1.5"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Macronutrients -->
+            <a-text
+              value="Protein: 0g  |  Fat: 0g  |  Carbs: 39g"
+              align="center"
+              color="#94a3b8"
+              position="0 -0.2 0.01"
+              scale="0.8 0.8 0.8"
+            ></a-text>
+            
+            <!-- Additional Info -->
+            <a-text
+              value="Sugar: 39g  |  Sodium: 45mg"
+              align="center"
+              color="#64748b"
+              position="0 -0.5 0.01"
+              scale="0.7 0.7 0.7"
+            ></a-text>
+            
+            <!-- Serving Size -->
+            <a-text
+              value="1 gelas (355 ml)"
+              align="center"
+              color="#475569"
+              position="0 -0.75 0.01"
+              scale="0.6 0.6 0.6"
+            ></a-text>
+          </a-plane>
         </a-marker>
 
         <!-- Marker: Chicken (custom pattern - replace di production) -->
@@ -134,15 +305,72 @@
           emitevents="true"
           cursor="fuse: false; rayOrigin: mouse;"
         >
+          <!-- 3D Nutrition Card -->
           <a-plane
-            class="ar-overlay"
-            position="0 0 0"
+            class="ar-3d-card"
+            position="0 0.5 0"
             rotation="-90 0 0"
-            width="1.5"
-            height="1"
-            material="color: #ffffff; opacity: 0; transparent: true"
+            width="2.5"
+            height="2"
+            color="#1e293b"
+            opacity="0.95"
             data-food="chicken"
-          ></a-plane>
+            visible="false"
+          >
+            <!-- Food Icon & Name -->
+            <a-text
+              value="🍗"
+              align="center"
+              color="#f97316"
+              position="0 0.65 0.01"
+              scale="2.5 2.5 2.5"
+            ></a-text>
+            <a-text
+              value="Ayam Goreng"
+              align="center"
+              color="#ffffff"
+              position="0 0.4 0.01"
+              scale="1.2 1.2 1.2"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Calories (Large) -->
+            <a-text
+              value="430 kcal"
+              align="center"
+              color="#f97316"
+              position="0 0.1 0.01"
+              scale="1.5 1.5 1.5"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Macronutrients -->
+            <a-text
+              value="Protein: 30g  |  Fat: 27g  |  Carbs: 16g"
+              align="center"
+              color="#94a3b8"
+              position="0 -0.2 0.01"
+              scale="0.8 0.8 0.8"
+            ></a-text>
+            
+            <!-- Additional Info -->
+            <a-text
+              value="Sugar: 0g  |  Sodium: 1190mg"
+              align="center"
+              color="#64748b"
+              position="0 -0.5 0.01"
+              scale="0.7 0.7 0.7"
+            ></a-text>
+            
+            <!-- Serving Size -->
+            <a-text
+              value="2 potong (148 g)"
+              align="center"
+              color="#475569"
+              position="0 -0.75 0.01"
+              scale="0.6 0.6 0.6"
+            ></a-text>
+          </a-plane>
         </a-marker>
 
         <!-- Marker: Pizza (custom pattern - replace di production) -->
@@ -154,15 +382,72 @@
           emitevents="true"
           cursor="fuse: false; rayOrigin: mouse;"
         >
+          <!-- 3D Nutrition Card -->
           <a-plane
-            class="ar-overlay"
-            position="0 0 0"
+            class="ar-3d-card"
+            position="0 0.5 0"
             rotation="-90 0 0"
-            width="1.5"
-            height="1"
-            material="color: #ffffff; opacity: 0; transparent: true"
+            width="2.5"
+            height="2"
+            color="#1e293b"
+            opacity="0.95"
             data-food="pizza"
-          ></a-plane>
+            visible="false"
+          >
+            <!-- Food Icon & Name -->
+            <a-text
+              value="🍕"
+              align="center"
+              color="#ef4444"
+              position="0 0.65 0.01"
+              scale="2.5 2.5 2.5"
+            ></a-text>
+            <a-text
+              value="Pizza Slice"
+              align="center"
+              color="#ffffff"
+              position="0 0.4 0.01"
+              scale="1.2 1.2 1.2"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Calories (Large) -->
+            <a-text
+              value="285 kcal"
+              align="center"
+              color="#ef4444"
+              position="0 0.1 0.01"
+              scale="1.5 1.5 1.5"
+              font="roboto"
+            ></a-text>
+            
+            <!-- Macronutrients -->
+            <a-text
+              value="Protein: 12g  |  Fat: 10g  |  Carbs: 36g"
+              align="center"
+              color="#94a3b8"
+              position="0 -0.2 0.01"
+              scale="0.8 0.8 0.8"
+            ></a-text>
+            
+            <!-- Additional Info -->
+            <a-text
+              value="Sugar: 4g  |  Sodium: 640mg"
+              align="center"
+              color="#64748b"
+              position="0 -0.5 0.01"
+              scale="0.7 0.7 0.7"
+            ></a-text>
+            
+            <!-- Serving Size -->
+            <a-text
+              value="1 potong (107 g)"
+              align="center"
+              color="#475569"
+              position="0 -0.75 0.01"
+              scale="0.6 0.6 0.6"
+            ></a-text>
+          </a-plane>
         </a-marker>
       </a-scene>
 

@@ -154,6 +154,9 @@ class ARHandler {
     // Update UI status
     this.updateScanStatus(`Marker ${foodType} terdeteksi!`, "detected");
 
+    // Show 3D AR card with animation
+    this.show3DCard(foodType);
+
     // Tampilkan nutrition panel setelah delay kecil (untuk stabilitas)
     this.detectionTimeout = setTimeout(() => {
       if (this.detectedMarkers.has(foodType)) {
@@ -181,6 +184,9 @@ class ARHandler {
     if (this.detectionTimeout) {
       clearTimeout(this.detectionTimeout);
     }
+
+    // Hide 3D AR card
+    this.hide3DCard(foodType);
 
     // Jika ini adalah marker yang sedang ditampilkan
     if (this.currentDetectedFood === foodType) {
@@ -278,6 +284,84 @@ class ARHandler {
    */
   isAnyMarkerDetected() {
     return this.detectedMarkers.size > 0;
+  }
+
+  /**
+   * Show 3D AR card with smooth animation
+   */
+  show3DCard(foodType) {
+    const marker = this.markers[foodType];
+    if (!marker) {
+      console.warn(`⚠️ Cannot find marker for ${foodType}`);
+      return;
+    }
+
+    const card = marker.querySelector('.ar-3d-card');
+    if (!card) {
+      console.warn(`⚠️ Cannot find 3D card for ${foodType}`);
+      return;
+    }
+
+    console.log(`✨ Showing 3D card for ${foodType}`);
+    
+    // Set visible and animate opacity
+    card.setAttribute('visible', 'true');
+    
+    // Smooth fade-in animation using A-Frame animation component
+    card.setAttribute('animation__fadein', {
+      property: 'material.opacity',
+      from: 0,
+      to: 0.95,
+      dur: 500,
+      easing: 'easeOutQuad'
+    });
+    
+    // Scale animation for dynamic effect
+    card.setAttribute('animation__scalein', {
+      property: 'scale',
+      from: '0.8 0.8 0.8',
+      to: '1 1 1',
+      dur: 500,
+      easing: 'easeOutBack'
+    });
+  }
+
+  /**
+   * Hide 3D AR card with smooth animation
+   */
+  hide3DCard(foodType) {
+    const marker = this.markers[foodType];
+    if (!marker) return;
+
+    const card = marker.querySelector('.ar-3d-card');
+    if (!card) return;
+
+    console.log(`👋 Hiding 3D card for ${foodType}`);
+    
+    // Smooth fade-out animation
+    card.setAttribute('animation__fadeout', {
+      property: 'material.opacity',
+      from: 0.95,
+      to: 0,
+      dur: 400,
+      easing: 'easeInQuad'
+    });
+    
+    // Scale down animation
+    card.setAttribute('animation__scaleout', {
+      property: 'scale',
+      from: '1 1 1',
+      to: '0.8 0.8 0.8',
+      dur: 400,
+      easing: 'easeInBack'
+    });
+    
+    // Hide after animation completes
+    setTimeout(() => {
+      if (!this.detectedMarkers.has(foodType)) {
+        card.setAttribute('visible', 'false');
+      }
+    }, 400);
   }
 }
 
